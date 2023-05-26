@@ -37,6 +37,44 @@ app.get('/', (req, res) => {
     console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
 })
 
+app.get('/homepage', (req, res) => {
+    res.render('homepage.ejs');
+    console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
+})
 
+app.get('/inforegister', (req, res) => {
+    res.render('inforegister.ejs');
+    console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
+})
+
+app.get('/infoquiz', (req, res) => {
+    res.render('infoquiz.ejs');
+    console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
+})
+
+app.get('/enviroquiz', (req, res) => {
+    res.render('enviroquiz.ejs');
+    console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
+})
+
+app.get('/socialquiz', (req, res) => {
+    res.render('socialquiz.ejs');
+    console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
+})
+
+app.get('/governquiz', (req, res) => {
+    res.render('governquiz.ejs');
+    console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
+})
+
+app.get('/resultquiz', (req, res) => {
+    res.render('resultquiz.ejs');
+    console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
+})
+
+app.get('/contactus', (req, res) => {
+    res.render('contactus.ejs');
+    console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
+})
 
 http.listen(port, () => console.log(`app listening on port ${port}!`));

@@ -1,27 +1,37 @@
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Facebook Login Page</title>
-    <link rel="stylesheet" href="./login_form_2.css" />
-  </head>
+<%- include('./header') %>
+
   <body>
-    <div class="content">
-      <div class="flex-div">
-        <div class="name-content">
-          <h1 class="logo">Facebook</h1>
-          <p>Connect with friends and the world around you on Facebook.</p>
+    <main>
+      <div class="container-fluid d-grid gap-3 align-items-center"
+        style="grid-template-columns: 1fr 2fr; padding: 0 !important;">
+        <div class="home-bg-image text-center">
+
         </div>
-          <form>
-            <input type="text" placeholder="Email or Phone Number" required />
-            <input type="password" placeholder="Password" required>
-            <button class="login">Log In</button>
-            <a href="#">Forgot Password ?</a>
-            <hr>
-            <button class="create-account">Create New Account</button>
-          </form>
+        <div class="home-bg-form col-lg-6 mx-auto">
+          <h1 class="display-5 fw-bold lh-1 mb-3">ESG 자체 평가</h1>
+          <br>
+          <br>
+          <p class="lead">ESG는 확인 사항을 확인하는 것이 아닙니다. 새로운 결과에 초점을 맞추기 위해 비즈니스와 접근 방식을 혁신하는 것입니다. 비즈니스, 경제 및 사회에 대한 가치를
+            지속적으로 창출하고 신뢰를 구축하는 기업.
+            <br>
+            <br>
+            여기에서 그곳까지 어떻게 가죠? 당신은 현실적인 길이 필요합니다.
+            <br>
+            <br>
+            이 도구는 출발점을 평가하고 앞으로 나아갈 방향을 제시하는 데 도움이 되도록 설계되었습니다.
+            <br>
+            <br>
+            이 툴에서는 ESG 프로그램 계획의 21가지 주요 기능을 살펴봅니다. 각 질문 아래에서 조직의 현재 상황에 가장 적합한 진술을 선택합니다. 자체 평가를 완료하면 시작점 프로필과 제안된 다음
+            단계에 대해 논의할 수 있는 초대장을 받게 됩니다.
+            <br>
+            <br>
+          </p>
+          <a class="btn btn-primary btn-lg px-4 me-sm-3" href="/inforegister">시작
+          </a>
+        </div>
       </div>
-    </div>
+    </main>
   </body>
+
 </html>

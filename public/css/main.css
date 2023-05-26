@@ -1,4 +1,13 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@font-face {
+    font-family: JalnanOTF;
+    src: url('../fonts/JalnanOTF.otf');
+}
+
+@font-face {
+    font-family: NotoSansKR-Regular;
+    src: url('../fonts/NotoSansKR-Regular.otf');
+}
+
 
 * {
   margin: 0;
@@ -7,223 +16,76 @@
 }
 
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: NotoSansKR-Regular, sans-serif;
   background: #f2f4f7;
 }
 
-.content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+h1, h4 {
+    font-family: JalnanOTF, sans-serif;
 }
 
-.flex-div {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
+.home-bg-image {
+    background-image: url('../img/home-bg.png');
+    width: 100%;
+    height: calc(100vh - 78px);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    z-index: 1;
 }
 
-.name-content {
-  margin-right: 7rem;
+.info-bg-image {
+    background-image: url('../img/info-bg.png');
+    width: 100%;
+    height: calc(100vh - 78px);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    z-index: 1;
 }
 
-.name-content .logo {
-  font-size: 3.5rem;
-  color: #1877f2;
+.enviro-bg-image {
+    background-image: url('../img/enviro-bg.png');
+    width: 100%;
+    height: calc(100vh - 78px);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    z-index: 1;
 }
 
-.name-content p {
-  font-size: 1.3rem;
-  font-weight: 500;
-  margin-bottom: 5rem;
+.social-bg-image {
+    background-image: url('../img/social-bg.png');
+    width: 100%;
+    height: calc(100vh - 78px);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    z-index: 1;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-  padding: 2rem;
-  width: 530px;
-  height: 380px;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+.govern-bg-image {
+    background-image: url('../img/govern-bg.png');
+    width: 100%;
+    height: calc(100vh - 78px);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    z-index: 1;
 }
 
-form input {
-  outline: none;
-  padding: 0.8rem 1rem;
-  margin-bottom: 0.8rem;
-  font-size: 1.1rem;
-}
-
-form input:focus {
-  border: 1.8px solid #1877f2;
-}
-
-form .login {
-  outline: none;
-  border: none;
-  background: #1877f2;
-  padding: 0.8rem 1rem;
-  border-radius: 0.4rem;
-  font-size: 1.1rem;
-  color: #fff;
-}
-
-form .login:hover {
-  background: #0f71f1;
-  cursor: pointer;
-}
-
-form a {
-  text-decoration: none;
-  text-align: center;
-  font-size: 1rem;
-  padding-top: 0.8rem;
-  color: #1877f2;
-}
-
-form hr {
-  background: #f7f7f7;
-  margin: 1rem;
-}
-
-form .create-account {
-  outline: none;
-  border: none;
-  background: #06b909;
-  padding: 0.8rem 1rem;
-  border-radius: 0.4rem;
-  font-size: 1.1rem;
-  color: #fff;
-  width: 75%;
-  margin: 0 auto;
-}
-
-form .create-account:hover {
-  background: #03ad06;
-  cursor: pointer;
-}
-
-/* //.........Media Query.........// */
-
-@media (max-width: 500px) {
-  html {
-    font-size: 60%;
-  }
-
-  .name-content {
-    margin: 0;
-    text-align: center;
-  }
-
-  form {
-    width: 300px;
-    height: fit-content;
-  }
-
-  form input {
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-  }
-
-  form .login {
-    font-size: 1.5rem;
-  }
-
-  form a {
-    font-size: 1.5rem;
-  }
-
-  form .create-account {
-    font-size: 1.5rem;
-  }
-
-  .flex-div {
-    display: flex;
-    flex-direction: column;
-  }
-}
-
-@media (min-width: 501px) and (max-width: 768px) {
-  html {
-    font-size: 60%;
-  }
-
-  .name-content {
-    margin: 0;
-    text-align: center;
-  }
-
-  form {
-    width: 300px;
-    height: fit-content;
-  }
-
-  form input {
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-  }
-
-  form .login {
-    font-size: 1.5rem;
-  }
-
-  form a {
-    font-size: 1.5rem;
-  }
-
-  form .create-account {
-    font-size: 1.5rem;
-  }
-
-  .flex-div {
-    display: flex;
-    flex-direction: column;
-  }
-}
-
-@media (min-width: 769px) and (max-width: 1200px) {
-  html {
-    font-size: 60%;
-  }
-
-  .name-content {
-    margin: 0;
-    text-align: center;
-  }
-
-  form {
-    width: 300px;
-    height: fit-content;
-  }
-
-  form input {
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-  }
-
-  form .login {
-    font-size: 1.5rem;
-  }
-
-  form a {
-    font-size: 1.5rem;
-  }
-
-  form .create-account {
-    font-size: 1.5rem;
-  }
-
-  .flex-div {
-    display: flex;
-    flex-direction: column;
-  }
-
-  @media (orientation: landscape) and (max-height: 500px) {
-    .header {
-      height: 90vmax;
-    }
-  }  
+.contact-bg-image {
+    background-image: url('../img/contact-bg.png');
+    width: 100%;
+    height: calc(100vh - 78px);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    z-index: 1;
 }

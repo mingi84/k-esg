@@ -1,0 +1,214 @@
+<html lang="en">
+<%- include('./header') %>
+
+    <body>
+        <script language="javascript" type="text/javascript"
+            src="https://rendro.github.io/easy-pie-chart/javascripts/jquery.easy-pie-chart.js"></script>
+
+        <style>
+            .panel {
+                display: flex;
+                position: relative;
+                background: #fff;
+                width: 300px;
+                padding: 0 35px;
+                text-align: center;
+                @include border-radius(4px);
+                box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+            }
+
+            .chart {
+                display: inline-block;
+                width: 200;
+                margin: 40px auto 20px;
+                padding: 0px;
+            }
+
+            .easyPieChart {
+                position: relative;
+                text-align: center;
+
+                canvas {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                }
+            }
+
+            .percentage,
+            .label {
+                margin-bottom: 0.5em;
+                text-align: center;
+                font-weight: 100;
+            }
+
+            .percentage {
+                font-size: 70px;
+            }
+
+            .percentage sup {
+                top: -11px;
+                margin-left: 1px;
+                font-size: 14px;
+                position: relative;
+            }
+
+            .percentage span {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: #000;
+                word-spacing: 5px;
+            }
+
+            .meta {
+                margin: auto;
+                max-width: 280px;
+                border-top: 1px solid rgba(155, 155, 155, 0.2);
+                text-align: center;
+            }
+
+            p {
+                margin: 0;
+                padding: 20px;
+                color: lighten(#a1a7a6, 15%);
+            }
+        </style>
+        <main>
+            <div class="container">
+                <div class="row py-5 text-center">
+                    <h1>Result of Self-Assessment</h1>
+                    <p>Congratulations! your company is eligible to apply for the ESG certificate.</p>
+                </div>
+                <br>
+                <br>
+                <div class="row">
+                    <div class="d-grid gap-2 col-12 mx-auto" style="grid-template-columns: 1fr 1fr 1fr 1fr;">
+                        <div class="card text-center">
+                            <img src="./img/info-icon.png" alt="" style="position: absolute; left: 50%;
+                            transform: translate(-50%, -50%); top: -10px; height: 100px;">
+                            <div class="chart">
+                                <br>
+                                <h4>Information</h4>
+                                <br>
+                                <div class="percentage" data-percent="70">
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card text-center">
+                            <img src="./img/enviro-icon.png" alt="" style="position: absolute; left: 50%;
+                            transform: translate(-50%, -50%); top: -10px; height: 100px;">
+                            <div class="chart">
+                                <br>
+                                <h4>Environment
+                                </h4>
+                                <br>
+
+                                <div class="percentage" data-percent="60">
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card text-center">
+                            <img src="./img/social-icon.png" alt="" style="position: absolute; left: 50%;
+                            transform: translate(-50%, -50%); top: -10px; height: 100px;">
+                            <div class="chart">
+                                <br>
+                                <h4>Social
+                                </h4>
+                                <br>
+
+                                <div class="percentage" data-percent="90">
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card text-center">
+                            <img src="./img/gov-icon.png" alt="" style="position: absolute; left: 50%;
+                            transform: translate(-50%, -50%); top: -10px; height: 100px;">
+                            <div class="chart">
+                                <br>
+                                <h4>Governance
+
+                                </h4>
+                                <br>
+
+                                <div class="percentage" data-percent="80">
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class="row">
+                    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+                        <a class="btn btn-primary btn-lg px-4 me-sm-3" href="/contactus" style="width: 20vw;">Contact Us
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+        </main>
+
+        <script>
+            /**
+             * Built with the jQuery plugin that was born as a result of the great dribble shot
+             * https://rendro.github.io/easy-pie-chart/
+             **/
+
+
+            $('.percentage').easyPieChart({
+                animate: 1000,
+                lineWidth: 20,
+                scaleColor: false,
+                size: 200,
+                onStep: function (value) {
+                    this.$el.find('span').text(Math.round(value));
+                },
+                onStop: function (value, to) {
+                    this.$el.find('span').text(Math.round(to));
+                },
+                barColor: color
+            });
+
+
+
+
+
+
+
+            function color(percent) {
+                var color = '#F44336';
+
+                return (percent < 60 ? '#16a64d' : percent < 70 ? '#642f92' : percent < 80 ? '#e97034' : '#0367b4');
+
+
+                /*
+                var color = '#F44336';
+                if (percent > 50) {
+                    color = '#8bc34a'; //green
+                } else {
+                    color = '#F44336'; //red
+                }
+                return color;
+                */
+            }
+
+        </script>
+    </body>
+
+</html>

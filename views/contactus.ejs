@@ -1,0 +1,88 @@
+<html lang="en">
+<%- include('./header') %>
+
+    <body>
+        <main>
+            <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr; padding: 0 !important;">
+                <div class="contact-bg-image">
+
+                </div>
+                <div class="home-bg-form col-lg-6 mx-auto">
+                    <div class="text-center">
+                        <h1 class="display-5 fw-bold lh-1 mb-3">Contact Us
+                        </h1>
+                        <small class="text-muted">Feel free to contact us any time. We will get back to you as soon as
+                            we can!
+                        </small>
+                    </div>
+                    <br>
+                    <br>
+
+                    <form class="needs-validation" novalidate="">
+                        <div class="row g-3">
+
+
+                            <div class="col-12">
+                                <label for="companyname" class="form-label">Conpany Name </label>
+                                <input type="text" class="form-control" id="companyname" placeholder="Insert company name">
+                                <div class="invalid-feedback">
+                                    Please enter a valid email address for shipping updates.
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="userName" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="userName" placeholder="Insert your name"
+                                    value="" required="">
+                                <div class="invalid-feedback">
+                                    Valid name is required.
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="phoneNumber" class="form-label">Phone number <span
+                                    class="text-muted">(Optional)</span></label>
+                                <input type="text" class="form-control" id="phoneNumber" placeholder="Insert your number" value=""
+                                    required="">
+                                <div class="invalid-feedback">
+                                    Valid phone number is required.
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="email" class="form-label">Email </label>
+                                <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                                <div class="invalid-feedback">
+                                    Please enter a valid email address for shipping updates.
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="message" class="form-label">Message </label>
+                                <textarea type="email" class="form-control" id="email" placeholder="" rows="6"></textarea>
+                                <div class="invalid-feedback">
+                                    Please enter a valid email address for shipping updates.
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <br>
+                        <br>
+                        <div class="d-grid gap-2 d-sm-flex justify-content-sm-between mb-5">
+
+                            <a class="btn btn-secundary btn-lg px-4 me-sm-3" href="/homepage">뒤로</a>
+
+                            <a class="btn btn-primary btn-lg px-4 me-sm-3" href="/homepage">보내기</a>
+                        </div>
+
+                        <!--
+                            <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+                        -->
+                    </form>
+
+                </div>
+            </div>
+        </main>
+    </body>
+
+</html>
