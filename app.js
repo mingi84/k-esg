@@ -9,6 +9,9 @@ var __dirname = path.resolve();
 const app = express()
 const port = 80
 
+const maria = require('./model/connect/maria');
+maria.connect();
+
 var http = require("http").createServer(app);
 
 app.use(express.json());
