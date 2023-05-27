@@ -77,4 +77,15 @@ app.get('/contactus', (req, res) => {
     console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
 })
 
+app.get('/termsconditions', (req, res) => {
+    res.render('termsconditions.ejs');
+    console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
+})
+
+app.get('/successpage', (req, res) => {
+    res.render('successpage.ejs');
+    console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
+})
+
+
 http.listen(port, () => console.log(`app listening on port ${port}!`));

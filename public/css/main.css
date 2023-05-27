@@ -89,3 +89,14 @@ h1, h4 {
     position: relative;
     z-index: 1;
 }
+
+.success-bg-image {
+    background-image: url('../img/successbg.png');
+    width: 100%;
+    height: calc(100vh - 78px);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    z-index: 1;
+}
