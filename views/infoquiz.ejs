@@ -3,91 +3,94 @@
 
     <body>
         <main>
-            <div class="container-fluid d-grid gap-3 align-items-center"
-                style="grid-template-columns: 1fr 2fr; padding: 0 !important;">
-                <div class="info-bg-image">
+            <div class="progress" style="height: 10px; border-radius:0;">
+                <div class="progress-bar" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0"
+                    aria-valuemax="100"></div>
+            </div>
 
-                </div>
-                <div class="home-bg-form col-lg-6 mx-auto">
-                    <small class="text-muted">질문 1/27</small>
-                    <br>
-                    <br>
-                    <br>
-                    <p><b>1. 정보공시 형식</b></p>
-                    <h1 class="display-5 fw-bold lh-1 mb-3">ESG 정보공시 방식</h1>
-                    <small class="text-muted">귀사의 현재 상황을 가장 잘 설명하는 문장을 선택하십시오
-                    </small>
-                    <br>
-                    <br>
-                    <br>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 mx-auto  mb-3 py-5 mx-5 px-5">
+                        <a type="button" class="btn btn-light" href="/inforegister"><i class="fa fa-chevron-left"
+                                aria-hidden="true"></i> 뒤로</a>
+                        <br>
+                        <br>
+                        <div class="titlesection text-center">
+                            <h1 class="display-5 fw-bold lh-1 mb-3">ESG 정보공시 방식</h1>
+                            <small class="text-muted">귀사의 현재 상황을 가장 잘 설명하는 문장을 선택하십시오
+                            </small>
+                        </div>
+                        <br>
+                        <br>
+                        <form class="needs-validation" novalidate="">
+                            <div class="row g-3">
+                                <div class="my-3">
+                                    <div class="form-check">
+                                        <input id="credit" name="paymentMethod" type="radio" class="form-check-input"
+                                            required="">
+                                        <label class="form-check-label" for="credit">
+                                            조직이 어떠한 방식으로든 ESG 정보를 공시하지 않는 경우
+                                        </label>
+                                    </div>
+                                    <br>
+                                    <div class="form-check">
+                                        <input id="debit" name="paymentMethod" type="radio" class="form-check-input"
+                                            required="">
+                                        <label class="form-check-label" for="debit">
+                                            조직의 홈페이지 지속가능경영보고서, 사업보고서, 기타 간행물 등에 ESG 정보를 분산하여 공시하고 있는 경우
+                                        </label>
+                                    </div>
+                                    <br>
+                                    <div class="form-check">
+                                        <input id="paypal" name="paymentMethod" type="radio" class="form-check-input"
+                                            required="">
+                                        <label class="form-check-label" for="paypal">
+                                            조직의 홈페이지 지속가능경영보고서, 사업보고서, 기타 간행물 등에 ESG 정보를 통합하여 공시하고 있는 경우
+                                        </label>
+                                    </div>
+                                    <br>
+                                    <div class="form-check">
+                                        <input id="paypal" name="paymentMethod" type="radio" class="form-check-input"
+                                            required="">
+                                        <label class="form-check-label" for="paypal">
+                                            ESG 정보를 통합한 조직의 홈페이지, 지속가능경영보고서, 사업보고서, 기타 간행물 등을 지정된 장소에 비치하거나, 특정 URL에 담고
+                                            있는
+                                            경우
+                                        </label>
+                                    </div>
+                                    <br>
+                                    <div class="form-check">
+                                        <input id="paypal" name="paymentMethod" type="radio" class="form-check-input"
+                                            required="">
+                                        <label class="form-check-label" for="paypal">
+                                            "ESG 정보를 통합한 조직의 홈페이지, 지속가능경영보고서, 사업보고서, 기타 간행물 등의 발행여부를 '전자공시시스템-자율공시' 사항으로
+                                            알리는
+                                            경우"
+                                        </label>
+                                    </div>
+                                </div>
 
-                    <form class="needs-validation" novalidate="">
-                        <div class="row g-3">
-                            <div class="my-3">
-                                <div class="form-check">
-                                    <input id="credit" name="paymentMethod" type="radio" class="form-check-input"
-                                        required="">
-                                    <label class="form-check-label" for="credit">
-                                        조직이 어떠한 방식으로든 ESG 정보를 공시하지 않는 경우
-                                    </label>
-                                </div>
-                                <br>
-                                <div class="form-check">
-                                    <input id="debit" name="paymentMethod" type="radio" class="form-check-input"
-                                        required="">
-                                    <label class="form-check-label" for="debit">
-                                        조직의 홈페이지 지속가능경영보고서, 사업보고서, 기타 간행물 등에 ESG 정보를 분산하여 공시하고 있는 경우
-                                    </label>
-                                </div>
-                                <br>
-                                <div class="form-check">
-                                    <input id="paypal" name="paymentMethod" type="radio" class="form-check-input"
-                                        required="">
-                                    <label class="form-check-label" for="paypal">
-                                        조직의 홈페이지 지속가능경영보고서, 사업보고서, 기타 간행물 등에 ESG 정보를 통합하여 공시하고 있는 경우
-                                    </label>
-                                </div>
-                                <br>
-                                <div class="form-check">
-                                    <input id="paypal" name="paymentMethod" type="radio" class="form-check-input"
-                                        required="">
-                                    <label class="form-check-label" for="paypal">
-                                        ESG 정보를 통합한 조직의 홈페이지, 지속가능경영보고서, 사업보고서, 기타 간행물 등을 지정된 장소에 비치하거나, 특정 URL에 담고 있는
-                                        경우
-                                    </label>
-                                </div>
-                                <br>
-                                <div class="form-check">
-                                    <input id="paypal" name="paymentMethod" type="radio" class="form-check-input"
-                                        required="">
-                                    <label class="form-check-label" for="paypal">
-                                        "ESG 정보를 통합한 조직의 홈페이지, 지속가능경영보고서, 사업보고서, 기타 간행물 등의 발행여부를 '전자공시시스템-자율공시' 사항으로 알리는
-                                        경우"
-                                    </label>
-                                </div>
+
+
+                            </div>
+                            <br>
+                            <br>
+
+                            <div class="mb-5">
+                                <a class="btn btn-primary btn-lg px-4 me-sm-3 float-end" href="/enviroquiz">다음</a>
                             </div>
 
 
-
-                        </div>
-                        <br>
-                        <br>
-
-                        <div class="d-grid gap-2 d-sm-flex justify-content-sm-between mb-5">
-                            <a class="btn btn-secundary btn-lg px-4 me-sm-3" href="/inforegister">뒤로</a>
-
-                            <a class="btn btn-primary btn-lg px-4 me-sm-3" href="/enviroquiz">다음</a>
-
-                        </div>
-
-
-                        <!--
+                            <!--
                             <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
                         -->
-                    </form>
+                        </form>
+                    </div>
                 </div>
+
             </div>
         </main>
+        <%- include('./footer') %>
     </body>
 
 </html>

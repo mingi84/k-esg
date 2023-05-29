@@ -9,8 +9,8 @@ var __dirname = path.resolve();
 const app = express()
 const port = 80
 
-const maria = require('./model/connect/maria');
-maria.connect();
+//const maria = require('./model/connect/maria');
+//maria.connect();
 
 var http = require("http").createServer(app);
 
@@ -84,6 +84,11 @@ app.get('/termsconditions', (req, res) => {
 
 app.get('/successpage', (req, res) => {
     res.render('successpage.ejs');
+    console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
+})
+
+app.get('/homepage2', (req, res) => {
+    res.render('homepage2.ejs');
     console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
 })
 

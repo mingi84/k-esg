@@ -3,91 +3,92 @@
 
     <body>
         <main>
-            <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr; padding: 0 !important;">
-                <div class="enviro-bg-image">
+            <div class="progress" style="height: 10px; border-radius:0;">
+                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                    aria-valuemax="100"></div>
+            </div>
 
-                </div>
-                <div class="home-bg-form col-lg-6 mx-auto">
-                    <small class="text-muted">질문 5/27</small>
-                    <br>
-                    <br>
-                    <br>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 mx-auto  mb-3 py-5 mx-5 px-5">
+                        <a type="button" class="btn btn-light" href="/infoquiz"><i class="fa fa-chevron-left"
+                                aria-hidden="true"></i> 뒤로</a>
+                        <br>
+                        <br>
+                        <div class="titlesection text-center">
+                            <h1 class="display-5 fw-bold lh-1 mb-3">환경경영 추진체계</h1>
+                            <small class="text-muted">귀사의 현재 상황을 가장 잘 설명하는 문장을 선택하십시오
+                            </small>
+                        </div>
+                        <br>
+                        <br>
 
-                    <p><b>1. 환경경영 목표</b></p>
-                    <h1 class="display-5 fw-bold lh-1 mb-3">환경경영 추진체계</h1>
-                    <small class="text-muted">귀사의 현재 상황을 가장 잘 설명하는 문장을 선택하십시오
-                    </small>
-                    <br>
-                    <br>
-                    <br>
+                        <form class="needs-validation" novalidate="">
+                            <div class="row g-3">
+                                <div class="my-3">
+                                    <div class="form-check">
+                                        <input id="option1" name="paymentMethod" type="radio" class="form-check-input"
+                                            required="">
+                                        <label class="form-check-label" for="option1">
+                                            "환경경영 추진을 위한 전사 거버넌스 체계를 구축하고 있는 경우 (전담조직, 실무협의회, 경영회의 및 내부점검체계 등)"
+                                        </label>
+                                    </div>
+                                    <br>
+                                    <div class="form-check">
+                                        <input id="option2" name="paymentMethod" type="radio" class="form-check-input"
+                                            required="">
+                                        <label class="form-check-label" for="option2">
+                                            "환경경영 추진을 위한 전사 전담조직을 운영하고 있는 경우 (전사 환경경영 기획, 점검, 성과관리 등 실행업무 담당)"
+                                        </label>
+                                    </div>
+                                    <br>
+                                    <div class="form-check">
+                                        <input id="option3" name="paymentMethod" type="radio" class="form-check-input"
+                                            required="">
+                                        <label class="form-check-label" for="option3">
+                                            "환경경영 과제 실행에 필요한 자원을 투입하고 있는 경우 (환경투자 예산, 역량강화 교육, 내외부 전문인력 등)"
+                                        </label>
+                                    </div>
+                                    <br>
+                                    <div class="form-check">
+                                        <input id="option4" name="paymentMethod" type="radio" class="form-check-input"
+                                            required="">
+                                        <label class="form-check-label" for="option4">
+                                            "환경경영 추진 현황을 점검/분석/평가하는 시스템이 있는 경우 (IT기반 모니터링 시스템, 과제점검 회의, 제3자 의견수렴 등)"
+                                        </label>
+                                    </div>
+                                    <br>
+                                    <div class="form-check">
+                                        <input id="option5" name="paymentMethod" type="radio" class="form-check-input"
+                                            required="">
+                                        <label class="form-check-label" for="option5">
+                                            "환경경영 과제 이행현황이 경영진 포함 관련 구성원의 성과평가지표(KPls)에 반영되어 있는 경우 "
+                                        </label>
+                                    </div>
+                                </div>
 
-                    <form class="needs-validation" novalidate="">
-                        <div class="row g-3">
-                            <div class="my-3">
-                                <div class="form-check">
-                                    <input id="credit" name="paymentMethod" type="radio" class="form-check-input"
-                                        required="">
-                                    <label class="form-check-label" for="credit">
-                                        "환경경영 추진을 위한 전사 거버넌스 체계를 구축하고 있는 경우 (전담조직, 실무협의회, 경영회의 및 내부점검체계 등)"
-                                    </label>
-                                </div>
-                                <br>
-                                <div class="form-check">
-                                    <input id="debit" name="paymentMethod" type="radio" class="form-check-input"
-                                        required="">
-                                    <label class="form-check-label" for="debit">
-                                        "환경경영 추진을 위한 전사 전담조직을 운영하고 있는 경우 (전사 환경경영 기획, 점검, 성과관리 등 실행업무 담당)"
-                                    </label>
-                                </div>
-                                <br>
-                                <div class="form-check">
-                                    <input id="paypal" name="paymentMethod" type="radio" class="form-check-input"
-                                        required="">
-                                    <label class="form-check-label" for="paypal">
-                                        "환경경영 과제 실행에 필요한 자원을 투입하고 있는 경우 (환경투자 예산, 역량강화 교육, 내외부 전문인력 등)"
-                                    </label>
-                                </div>
-                                <br>
-                                <div class="form-check">
-                                    <input id="paypal" name="paymentMethod" type="radio" class="form-check-input"
-                                        required="">
-                                    <label class="form-check-label" for="paypal">
-                                        "환경경영 추진 현황을 점검/분석/평가하는 시스템이 있는 경우 (IT기반 모니터링 시스템, 과제점검 회의, 제3자 의견수렴 등)"
-                                    </label>
-                                </div>
-                                <br>
-                                <div class="form-check">
-                                    <input id="paypal" name="paymentMethod" type="radio" class="form-check-input"
-                                        required="">
-                                    <label class="form-check-label" for="paypal">
-                                        "환경경영 과제 이행현황이 경영진 포함 관련 구성원의 성과평가지표(KPls)에 반영되어 있는 경우 "
-                                    </label>
-                                </div>
+
+
+                            </div>
+                            <br>
+                            <br>
+
+                            <div class="mb-5">
+                                <a class="btn btn-primary btn-lg px-4 me-sm-3 float-end" href="/socialquiz">다음</a>
                             </div>
 
 
 
-                        </div>
-                        <br>
-                        <br>
-
-                        <div class="d-grid gap-2 d-sm-flex justify-content-sm-between mb-5">
-                            <a class="btn btn-secundary btn-lg px-4 me-sm-3" href="/infoquiz">뒤로
-                            </a>
-
-                            <a class="btn btn-primary btn-lg px-4 me-sm-3" href="/socialquiz">다음
-                            </a>
-
-                        </div>
-
-
-                        <!--
+                            <!--
                             <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
                         -->
-                    </form>
+                        </form>
+                    </div>
                 </div>
+
             </div>
         </main>
+        <%- include('./footer') %>
     </body>
 
 </html>

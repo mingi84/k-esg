@@ -1,3 +1,14 @@
+:root {
+    --bs-primary: #0070C0;
+}
+
+@font-face {
+    font-family: NanumSquare;
+    src: url('../fonts/NanumSquareOTF_acEB.otf');
+}
+
+
+
 @font-face {
     font-family: JalnanOTF;
     src: url('../fonts/JalnanOTF.otf');
@@ -9,94 +20,160 @@
 }
 
 
+
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  font-family: NotoSansKR-Regular, sans-serif;
-  background: #f2f4f7;
+    font-family: NotoSansKR-Regular, sans-serif;
+    background: #fff;
 }
 
-h1, h4 {
-    font-family: JalnanOTF, sans-serif;
+h1,
+h2,
+h4 {
+    font-family: NanumSquare, sans-serif;
+    color: var(--bs-primary);
+}
+
+
+.btn-outline-primary:hover{
+    color: #fff !important;
+    background-color: var(--bs-primary) !important;
+}
+
+
+
+.step-text {
+    margin-left: 0.8rem;
+}
+
+.step-icon {
+    margin: auto;
+}
+
+.step-icon {
+    font-size: 1.2rem;
+}
+
+
+
+
+
+.home-bg-image,
+.info-bg-image,
+.enviro-bg-image,
+.social-bg-image,
+.govern-bg-image,
+.contact-bg-image,
+.success-bg-image {
+    height: calc(100vh - 78px);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    z-index: 1;
+}
+
+.kesg-icon-img {
+    background-image: url('../img/kesgimgicon.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
 }
 
 .home-bg-image {
     background-image: url('../img/home-bg.png');
-    width: 100%;
-    height: calc(100vh - 78px);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    z-index: 1;
 }
 
 .info-bg-image {
     background-image: url('../img/info-bg.png');
-    width: 100%;
-    height: calc(100vh - 78px);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    z-index: 1;
 }
 
 .enviro-bg-image {
     background-image: url('../img/enviro-bg.png');
-    width: 100%;
-    height: calc(100vh - 78px);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    z-index: 1;
 }
 
 .social-bg-image {
     background-image: url('../img/social-bg.png');
-    width: 100%;
-    height: calc(100vh - 78px);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    z-index: 1;
 }
 
 .govern-bg-image {
     background-image: url('../img/govern-bg.png');
-    width: 100%;
-    height: calc(100vh - 78px);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    z-index: 1;
 }
 
 .contact-bg-image {
     background-image: url('../img/contact-bg.png');
-    width: 100%;
-    height: calc(100vh - 78px);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    z-index: 1;
 }
 
 .success-bg-image {
     background-image: url('../img/successbg.png');
-    width: 100%;
-    height: calc(100vh - 78px);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    z-index: 1;
+}
+
+
+
+@media (min-width: 576px) {
+    .card-deck {
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-flow: row wrap;
+        flex-flow: row wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 500px) {
+
+    .home-bg-image,
+    .info-bg-image,
+    .enviro-bg-image,
+    .social-bg-image,
+    .govern-bg-image,
+    .contact-bg-image,
+    .success-bg-image {
+        height: calc(10vh);
+    }
+
+    .headsection {
+        text-align: center!important;
+    }
+
+
+    .sidebar-img {
+        font-size: 8px;
+        background-image: url('../img/successbg.png');
+    }
+
+    h5 {
+        font-size: 14px;
+    }
+
+
+}
+
+@media (max-width: 991.98px) {
+
+    .home-bg-image,
+    .info-bg-image,
+    .enviro-bg-image,
+    .social-bg-image,
+    .govern-bg-image,
+    .contact-bg-image,
+    .success-bg-image {
+        height: calc(60vh);
+    }
+
+    .headsection {
+        text-align: center!important;
+    }
+
+    .kesg-icon-img {
+        height: 20vh;
+    }
 }
