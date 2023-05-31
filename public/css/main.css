@@ -45,7 +45,7 @@ h4 {
 
 .homecerticon {
     height: 40px;
-    margin-top: -20px;
+    margin-top: -40px;
     border: 3px solid #0070c0;
     border-radius: 10px;
     padding: 5px;
@@ -168,10 +168,12 @@ h4 {
 }
 
 .report-fig {
+    height: 20vh;
     background-image: url('../img/figreport.png');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
+    
 }
 
 
@@ -274,12 +276,14 @@ h4 {
         height: 20vh;
     }
 
-    .licensedimg {
-        height: 50px !important;
+    .card {
+        margin-top: 2rem !important;
+        margin-bottom: 2rem !important;
     }
 
-    .card {
-        margin-bottom: 5rem !important;
+    .esgfigbodytext {
+        text-align: center !important;
+        margin-top: 1em !important; 
     }
 
 
