@@ -7,8 +7,6 @@
     src: url('../fonts/NanumSquareOTF_acEB.otf');
 }
 
-
-
 @font-face {
     font-family: JalnanOTF;
     src: url('../fonts/JalnanOTF.otf');
@@ -40,12 +38,28 @@ h4 {
     color: var(--bs-primary);
 }
 
-
-.btn-outline-primary:hover{
+.btn-outline-primary:hover {
     color: #fff !important;
     background-color: var(--bs-primary) !important;
 }
 
+.homecerticon {
+    height: 40px;
+    margin-top: -20px;
+    border: 3px solid #0070c0;
+    border-radius: 10px;
+    padding: 5px;
+    background-color: #fff;
+}
+
+.card {
+    border-radius: 10px !important;
+}
+
+.circleesg {
+    border: 2px dashed #0070c0;
+    border-radius: 20em 20em;
+}
 
 
 .step-text {
@@ -62,7 +76,6 @@ h4 {
 
 
 /*------progress---------------- */
-
 
 #progress {
     overflow: hidden;
@@ -219,7 +232,7 @@ h4 {
     }
 
     .headsection {
-        text-align: center!important;
+        text-align: center !important;
     }
 
 
@@ -249,14 +262,15 @@ h4 {
 
     .headsection,
     .licensedrow {
-        text-align: center!important;
+        text-align: center !important;
     }
 
     .licensednumb {
         float: middle !important;
     }
 
-    .kesg-icon-img, .report-fig {
+    .kesg-icon-img,
+    .report-fig {
         height: 20vh;
     }
 
@@ -268,6 +282,6 @@ h4 {
         margin-bottom: 5rem !important;
     }
 
-    
+
 
 }
