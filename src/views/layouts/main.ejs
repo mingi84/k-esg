@@ -1,0 +1,33 @@
+<!-- src/views/layouts/main.ejs -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= pageTitle %></title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>K-ESG Self-Assessment</title>
+    <script language="javascript" type="text/javascript" src="../js/jquery-3.6.4.min.js"></script>
+    <script language="javascript" type="text/javascript" src="../js/bootstrap.bundle.js"></script>
+    <script language="javascript" type="text/javascript" src="../js/bootstrap.bundle.min.js"></script>
+    <script language="javascript" type="text/javascript" src="../js/fontawesome.all.min.js"></script>
+    <script language="javascript" type="text/javascript" src="../js/popper.js"></script>
+    <script language="javascript" type="text/javascript" src="../js/popper.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/fontawesome.all.css">
+    <link rel="stylesheet" href="../css/main.css" />
+</head>
+<body>
+  <header>
+    <%- include('../partials/header') %>
+  </header>
+
+  <main>
+    <%- content %> <!-- Render the content here -->
+  </main>
+
+  <footer>
+    <%- include('../partials/footer') %>
+  </footer>
+</body>
+</html>

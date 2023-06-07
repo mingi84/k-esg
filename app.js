@@ -1,96 +1,37 @@
 const express = require('express');
 const path = require('path');
-const bodyParse = require("body-parser");
+const bodyParser = require('body-parser');
+const homeRoutes = require('./src/routes/homeRoutes.js');
+const inforegisterRoutes = require('./src/routes/inforegisterRoutes');
+const infoquizRoutes = require('./src/routes/infoquizRoutes');
+const registerRoutes = require('./src/routes/registerRoutes');
+const questionsRoutes = require('./src/routes/questionsRoutes');
+const reportRoutes = require('./src/routes/reportRoutes');
 
+const app = express();
+const port = 80;
 
-var __dirname = path.resolve();
+// Set views directory and view engine
+app.set('views', path.join(__dirname, 'src/views'));
+app.set('view engine', 'ejs');
 
-// server config
-const app = express()
-const port = 80
+// Middleware
+app.use(bodyParser.json());
 
-//const maria = require('./model/connect/maria');
-//maria.connect();
-
-var http = require("http").createServer(app);
-
-app.use(express.json());
+// Routes
+app.use('/', homeRoutes);
+app.use('/home', homeRoutes);
+app.use('/homepage', homeRoutes);
+app.use('/inforegister', inforegisterRoutes);
+app.use('/infoquiz', infoquizRoutes);
+app.use('/register', registerRoutes);
+app.use('/questions', questionsRoutes);
+app.use('/report', reportRoutes);
 
 // Static Files
-app.use(express.static('public'))
-app.use('/css', express.static(__dirname + 'public/css'));
-app.use('/js', express.static(__dirname + 'public/js'));
-app.use('/img', express.static(__dirname + 'public/img'));
-app.use('/css', express.static(__dirname + 'public/fonts'));
-app.use("/public", express.static(__dirname + '/public'));
+app.use(express.static(path.join(__dirname, 'src', 'public')));
 
-
-
-// Set Views
-app.set('views', './views')
-app.set('view engine', 'ejs')
-
-var TAB = "\t";
-
-app.get('/', (req, res) => {
-    res.render('index.ejs');
-    console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
-})
-
-app.get('/homepage', (req, res) => {
-    res.render('homepage.ejs');
-    console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
-})
-
-app.get('/inforegister', (req, res) => {
-    res.render('inforegister.ejs');
-    console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
-})
-
-app.get('/infoquiz', (req, res) => {
-    res.render('infoquiz.ejs');
-    console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
-})
-
-app.get('/enviroquiz', (req, res) => {
-    res.render('enviroquiz.ejs');
-    console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
-})
-
-app.get('/socialquiz', (req, res) => {
-    res.render('socialquiz.ejs');
-    console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
-})
-
-app.get('/governquiz', (req, res) => {
-    res.render('governquiz.ejs');
-    console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
-})
-
-app.get('/resultquiz', (req, res) => {
-    res.render('resultquiz.ejs');
-    console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
-})
-
-app.get('/contactus', (req, res) => {
-    res.render('contactus.ejs');
-    console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
-})
-
-app.get('/termsconditions', (req, res) => {
-    res.render('termsconditions.ejs');
-    console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
-})
-
-app.get('/successpage', (req, res) => {
-    res.render('successpage.ejs');
-    console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
-})
-
-app.get('/homepage2', (req, res) => {
-    res.render('homepage2.ejs');
-    console.log(Date() + TAB + req.socket.localAddress + TAB + req.url);
-})
-
-
-http.listen(port, () => console.log(`app listening on port ${port}!`));
+// Start the server
+app.listen(port, () => {
+  console.log(`App listening on port ${port}!`);
+});

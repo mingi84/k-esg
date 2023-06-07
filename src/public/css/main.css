@@ -1,0 +1,291 @@
+:root {
+    --bs-primary: #0070C0;
+}
+
+@font-face {
+    font-family: NanumSquare;
+    src: url('../fonts/NanumSquareOTF_acEB.otf');
+}
+
+@font-face {
+    font-family: JalnanOTF;
+    src: url('../fonts/JalnanOTF.otf');
+}
+
+@font-face {
+    font-family: NotoSansKR-Regular;
+    src: url('../fonts/NotoSansKR-Regular.otf');
+}
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    word-break: keep-all
+}
+
+body {
+    font-family: NotoSansKR-Regular, sans-serif;
+    background: #fff;
+}
+
+h1,
+h2,
+h4 {
+    font-family: NanumSquare, sans-serif;
+    color: var(--bs-primary);
+}
+
+.btn-outline-primary:hover {
+    color: #fff !important;
+    background-color: var(--bs-primary) !important;
+}
+
+.homecerticon {
+    height: 40px;
+    margin-top: -40px;
+    border: 3px solid #0070c0;
+    border-radius: 10px;
+    padding: 5px;
+    background-color: #fff;
+}
+
+.card {
+    border-radius: 10px !important;
+}
+
+.circleesg {
+    border: 2px dashed #0070c0;
+    border-radius: 20em 20em;
+}
+
+
+.step-text {
+    margin-left: 0.8rem;
+}
+
+.step-icon {
+    margin: auto;
+}
+
+.step-icon {
+    font-size: 1.2rem;
+}
+
+
+/*------progress---------------- */
+
+#progress {
+    overflow: hidden;
+    padding-bottom: 2em;
+    text-align: center;
+}
+
+#progress .part {
+    border-bottom: 6px solid #999;
+    float: left;
+    margin-bottom: 1em;
+    position: relative;
+    width: 20%;
+}
+
+#progress .desc {
+    padding-bottom: 1em;
+}
+
+#progress .desc span {
+    font-size: 1em;
+}
+
+#progress .circle {
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 1.7em;
+}
+
+#progress .stepnumb {
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 4.0em;
+    font-size: 1em;
+}
+
+#progress .circle span {
+    background: none repeat scroll 0 0 #666;
+    border-radius: 2em 2em 2em 2em;
+    color: #FFFFFF;
+    display: inline-block;
+    font-size: 1em;
+    height: 2em;
+    line-height: 2;
+    width: 2em;
+}
+
+#progress .step {
+    position: absolute;
+}
+
+#progress .on {
+    border-bottom-color: #0d6efd;
+}
+
+#progress .on .desc {
+    font-weight: bold;
+}
+
+#progress .on .circle span {
+    font-weight: bold;
+    background-color: #0d6efd;
+}
+
+/*------progress---------------- */
+
+
+.home-bg-image,
+.info-bg-image,
+.enviro-bg-image,
+.social-bg-image,
+.govern-bg-image,
+.contact-bg-image,
+.success-bg-image {
+    height: calc(100vh - 78px);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    z-index: 1;
+}
+
+.kesg-icon-img {
+    background-image: url('../img/kesgimgicon.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.report-fig {
+    height: 20vh;
+    background-image: url('../img/figreport.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    
+}
+
+
+
+.home-bg-image {
+    background-image: url('../img/home-bg.png');
+}
+
+.info-bg-image {
+    background-image: url('../img/info-bg.png');
+}
+
+.enviro-bg-image {
+    background-image: url('../img/enviro-bg.png');
+}
+
+.social-bg-image {
+    background-image: url('../img/social-bg.png');
+}
+
+.govern-bg-image {
+    background-image: url('../img/govern-bg.png');
+}
+
+.contact-bg-image {
+    background-image: url('../img/contact-bg.png');
+}
+
+.success-bg-image {
+    background-image: url('../img/successbg.png');
+}
+
+
+
+@media (min-width: 576px) {
+    .card-deck {
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-flow: row wrap;
+        flex-flow: row wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 500px) {
+
+    .home-bg-image,
+    .info-bg-image,
+    .enviro-bg-image,
+    .social-bg-image,
+    .govern-bg-image,
+    .contact-bg-image,
+    .success-bg-image {
+        height: calc(10vh);
+    }
+
+    .headsection {
+        text-align: center !important;
+    }
+
+
+    .sidebar-img {
+        font-size: 8px;
+        background-image: url('../img/successbg.png');
+    }
+
+    h5 {
+        font-size: 14px;
+    }
+
+
+}
+
+@media (max-width: 991.98px) {
+
+    .home-bg-image,
+    .info-bg-image,
+    .enviro-bg-image,
+    .social-bg-image,
+    .govern-bg-image,
+    .contact-bg-image,
+    .success-bg-image {
+        height: calc(60vh);
+    }
+
+    .headsection,
+    .licensedrow {
+        text-align: center !important;
+    }
+
+    .licensednumb {
+        float: middle !important;
+    }
+
+    .kesg-icon-img,
+    .report-fig {
+        height: 20vh;
+    }
+
+    .card {
+        margin-top: 2rem !important;
+        margin-bottom: 2rem !important;
+    }
+
+    .esgfigbodytext {
+        text-align: center !important;
+        margin-top: 1em !important; 
+    }
+
+
+
+}
