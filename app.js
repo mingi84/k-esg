@@ -11,6 +11,9 @@ const reportRoutes = require('./src/routes/reportRoutes');
 const app = express();
 const port = 80;
 
+//const maria = require('./model/connect/maria');
+//maria.connect();
+
 // Set views directory and view engine
 app.set('views', path.join(__dirname, 'src/views'));
 app.set('view engine', 'ejs');
