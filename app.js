@@ -34,6 +34,8 @@ app.use('/report', reportRoutes);
 // Static Files
 app.use(express.static(path.join(__dirname, 'src', 'public')));
 
+require("./src/routes/question.routes.js")(app);
+
 // Start the server
 app.listen(port, () => {
   console.log(`App listening on port ${port}!`);
