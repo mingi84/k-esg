@@ -36,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'src', 'public')));
 
 require("./src/routes/question.routes.js")(app);
 require("./src/routes/session.routes.js")(app);
+require("./src/routes/category.routes.js")(app);
 // Start the server
 app.listen(port, () => {
   console.log(`App listening on port ${port}!`);
