@@ -9,4 +9,4 @@ exports.findAll=(req,res)=>{
         });
         else res.send(data);
     });
-}; 
+};
