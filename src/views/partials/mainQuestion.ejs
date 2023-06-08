@@ -5,22 +5,22 @@
         <div class="circle"><span>R</span></div>
         <div class="stepnumb"><span>1/1</span></div>
     </div>
-    <div class="part on">
+    <div id="partP" class="part">
         <div class="desc"><span>정보공시</span></div>
         <div class="circle"><span>P</span></div>
         <div class="stepnumb"><span>1/4</span></div>
     </div>
-    <div class="part">
+    <div id="partE" class="part">
         <div class="desc"><span>환경</span></div>
         <div class="circle"><span>E</span></div>
         <div class="stepnumb"><span>0/9</span></div>
     </div>
-    <div class="part">
+    <div id="partS" class="part">
         <div class="desc"><span>사회</span></div>
         <div class="circle"><span>S</span></div>
         <div class="stepnumb"><span>0/9</span></div>
     </div>
-    <div class="part">
+    <div id="partG" class="part">
         <div class="desc"><span>지배구조</span></div>
         <div class="circle"><span>G</span></div>
         <div class="stepnumb"><span>0/5</span></div>
@@ -139,34 +139,54 @@
             var jsonquestion = {};
             var optionlist = [];
             var answerlist = question.answer.split("_");
-            console.log(answerlist);
             answerlist.forEach(option => {
                 var oneoption = option.split("@");
                 optionlist.push(oneoption);
             })
-            console.log(optionlist);
             jsonquestion = {
                 'ID': question.ID,
                 'SCQID': question.SCQID,
                 'answer': optionlist,
                 'question': question.question,
-                'type': question.type 
+                'type': question.type
             }
             jsondatalist.push(jsonquestion);
-            console.log(jsondatalist);
             questionlist = jsondatalist;
-            getQuestion(0)
         });
+        getQuestion(0)
     }
 
     function getQuestion(questionumb) {
-        var questdata = JSON.parse(JSON.stringify(questionlist[questionumb]));
+        var questdata = questionlist[questionumb];
         drawpage(questdata);
     }
 
     function drawpage(data) {
         var questionText = data.question;
         $('#questiontext').text(questionText);
+        var part = data.SCQID.split("-");
+
+        switch (part[0]) {
+            case "E":
+                $("#partE").addClass('on');
+                $("#partS").removeClass('on');
+                $("#partG").removeClass('on');
+                break
+            case "S":
+                $("#partS").addClass('on');
+                $("#partG").removeClass('on');
+                break
+            case "G":
+                $("#partG").addClass('on');
+                break
+            default:
+                $("#partP").addClass('on');
+                $("#partE").removeClass('on');
+                $("#partS").removeClass('on');
+                $("#partG").removeClass('on');
+        }
+
+
 
         switch (data.type) {
             case 1:
@@ -186,7 +206,7 @@
         console.log(questionumb);
         if (questionumb == 0) {
             contentbuttons = '<a type="button" class="btn btn-light btn-lg" href="/inforegister"><i class="fa fa-chevron-left"aria-hidden="true"></i> 뒤로</a><a class="btn btn-primary btn-lg px-4 me-sm-3 float-end" onclick="nextpage(' + questionumb + ')">다음</a>'
-        } else if(questionumb + 1 == questionlist.length ) {
+        } else if (questionumb + 1 == questionlist.length) {
             contentbuttons = '<a type="button" class="btn btn-light btn-lg" onclick=backpage(' + questionumb + ')><i class="fa fa-chevron-left"aria-hidden="true"></i> 뒤로</a><a class="btn btn-primary btn-lg px-4 me-sm-3 float-end" href="/report">다음</a>'
         } else {
             contentbuttons = '<a type="button" class="btn btn-light btn-lg" onclick=backpage(' + questionumb + ')><i class="fa fa-chevron-left"aria-hidden="true"></i> 뒤로</a><a class="btn btn-primary btn-lg px-4 me-sm-3 float-end" onclick="nextpage(' + questionumb + ')">다음</a>'
@@ -215,7 +235,7 @@
 
         for (i = 0; i < options.length; i++) {
             let opttext = options[i][0]
-            let optresult = opttext.replaceAll('"','');
+            let optresult = opttext.replaceAll('"', '');
 
             contenthtml += '<div class="form-check"><input id="credit" name="paymentMethod" type="radio" class="form-check-input" required=""><label class="form-check-label" for="credit">'
                 + optresult
@@ -237,20 +257,20 @@
 
         for (i = 0; i < options.length; i++) {
             let opttext = options[i][2];
-            let optresult = opttext.replaceAll('"','');
+            let optresult = opttext.replaceAll('"', '');
             console.log(options[i][2]);
             var selectradio = '';
             var selectlist = optresult.split('-');
 
-            for (j=0; j<selectlist.length; j++) {
-                selectradio += '<input type="radio" class="btn-check" name="options" id="option3" autocomplete="off"><label class="col btn btn-outline-primary selectoption mx-1" for="option' + j + '">' + selectlist[j] +'</label>'
+            for (j = 0; j < selectlist.length; j++) {
+                selectradio += '<input type="radio" class="btn-check" style="width:80%" name="options' + i + j + '" id="option' + i + j + '" autocomplete="off"><label class="col btn btn-outline-primary selectoption mx-1" for="option' + i + j + '">' + selectlist[j] + '</label>'
             }
 
 
 
-            contenthtml += '<div><h4>' + options[i][0].replaceAll('"','') + '</h4><label class="form-check-label" for="credit">' +
-                           options[i][1] + '</label><br><br><div class="row mx-auto"style="">'
-                           + selectradio + '</div></div><br>'
+            contenthtml += '<div><h4>' + options[i][0].replaceAll('"', '') + '</h4><label class="form-check-label" for="credit">' +
+                options[i][1] + '</label><br><br><div class="row mx-auto"style="">'
+                + selectradio + '</div></div><br>'
 
 
         }
