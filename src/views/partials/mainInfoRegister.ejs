@@ -211,6 +211,8 @@
                     saveuserdata();
                 } else {
                     //console.log(data[0].ID);
+                    var myStorage = window.sessionStorage;
+                    myStorage.setItem('ID', data[0].ID);
                     window.location.href = '/questions';
                 }
             },

@@ -102,6 +102,11 @@
 <script>
     var questionumb = 0;
     var questionlist = {};
+    var questtype = 0;
+    var dataanswer = "";
+
+    var myStorage = window.sessionStorage;
+    var userID = myStorage.getItem("ID");
 
     $(document).ready(function () {
         // Code to be executed after the page has finished loading
@@ -162,8 +167,8 @@
     }
 
     function drawpage(data) {
-        var questionText = data.question;
-        $('#questiontext').text(questionText);
+        var questionText = data.question + '<input type="text" id="scqidinput" value="'+ data.SCQID +'" style="display:none;">';
+        $('#questiontext').html(questionText);
         var part = data.SCQID.split("-");
 
         switch (part[0]) {
@@ -190,6 +195,7 @@
 
         switch (data.type) {
             case 1:
+                questtype = 1;
                 questiontype1(data.answer);
                 break;
             case 2:
@@ -207,7 +213,9 @@
         if (questionumb == 0) {
             contentbuttons = '<a type="button" class="btn btn-light btn-lg" href="/inforegister"><i class="fa fa-chevron-left"aria-hidden="true"></i> 뒤로</a><a class="btn btn-primary btn-lg px-4 me-sm-3 float-end" onclick="nextpage(' + questionumb + ')">다음</a>'
         } else if (questionumb + 1 == questionlist.length) {
-            contentbuttons = '<a type="button" class="btn btn-light btn-lg" onclick=backpage(' + questionumb + ')><i class="fa fa-chevron-left"aria-hidden="true"></i> 뒤로</a><a class="btn btn-primary btn-lg px-4 me-sm-3 float-end" href="/report">다음</a>'
+            contentbuttons = '<a type="button" class="btn btn-light btn-lg" onclick=backpage(' 
+            + questionumb 
+            + ')><i class="fa fa-chevron-left"aria-hidden="true"></i> 뒤로</a><a class="btn btn-primary btn-lg px-4 me-sm-3 float-end" onclick="senddataanswer()">다음</a>'
         } else {
             contentbuttons = '<a type="button" class="btn btn-light btn-lg" onclick=backpage(' + questionumb + ')><i class="fa fa-chevron-left"aria-hidden="true"></i> 뒤로</a><a class="btn btn-primary btn-lg px-4 me-sm-3 float-end" onclick="nextpage(' + questionumb + ')">다음</a>'
         }
@@ -223,10 +231,62 @@
     function nextpage() {
         questionumb = questionumb + 1;
         console.log(questionumb);
+        console.log(questtype);
+        if (questtype == 1) {
+            var radios = document.getElementsByName('radiooption');
+            var selectedValue = '';
+
+            for (var i = 0; i < radios.length; i++) {
+                if (radios[i].checked) {
+                    selectedValue = radios[i].value;
+                    break;
+                }
+            }
+            console.log(selectedValue);
+        }
+        var questSCQID = document.getElementById("scqidinput");
+        var questvalue = questSCQID.value;
+        dataanswer += 'qtype=1_SCQID='+ questvalue +'_point=' + selectedValue + ',';
+
+        console.log(dataanswer);
+
         getQuestion(questionumb);
     }
 
+    function senddataanswer() {
+        console.log(dataanswer);
 
+        var responsedata = {
+            "userID": userID,
+            "epoints":dataanswer,
+            "spoints":dataanswer,
+            "gpoints":dataanswer,
+            "totalpoints":70,            
+        }
+
+
+
+        $.ajax({
+            url: '/checkhistorysql',
+            method: 'post',
+            dataType: 'json',
+            data: JSON.stringify(responsedata), // JSON body
+            contentType: 'application/json', // Set content type to JSON
+            success: function (data) {
+                console.log(data);
+                // Handle the response data
+                    window.location.href = '/report';
+            },
+            error: function (error) {
+                // Handle any errors
+                console.error('Error:', error);
+            }
+        });
+
+
+
+
+    }
 
     function questiontype1(options) {
         console.log('questiontype1');
@@ -235,9 +295,11 @@
 
         for (i = 0; i < options.length; i++) {
             let opttext = options[i][0]
+            var point = options[i][1]
             let optresult = opttext.replaceAll('"', '');
 
-            contenthtml += '<div class="form-check"><input id="credit" name="paymentMethod" type="radio" class="form-check-input" required=""><label class="form-check-label" for="credit">'
+            contenthtml += '<div class="form-check"><input id="credit" name="radiooption" type="radio" class="form-check-input" required="" value="'
+                + point + '"><label class="form-check-label" for="credit">'
                 + optresult
                 + '</label></div><br>';
         }
