@@ -1,0 +1,282 @@
+<br>
+<div id="progress">
+    <div class="part on">
+        <div class="desc"><span>기본정보</span></div>
+        <div class="circle"><span>R</span></div>
+        <div class="stepnumb"><span>1/1</span></div>
+    </div>
+    <div id="partP" class="part">
+        <div class="desc"><span>정보공시</span></div>
+        <div class="circle"><span>P</span></div>
+        <div class="stepnumb"><span>1/4</span></div>
+    </div>
+    <div id="partE" class="part">
+        <div class="desc"><span>환경</span></div>
+        <div class="circle"><span>E</span></div>
+        <div class="stepnumb"><span>0/9</span></div>
+    </div>
+    <div id="partS" class="part">
+        <div class="desc"><span>사회</span></div>
+        <div class="circle"><span>S</span></div>
+        <div class="stepnumb"><span>0/9</span></div>
+    </div>
+    <div id="partG" class="part">
+        <div class="desc"><span>지배구조</span></div>
+        <div class="circle"><span>G</span></div>
+        <div class="stepnumb"><span>0/5</span></div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 mx-auto  mb-3 py-5 mx-5 px-5">
+            <div class="titlesection text-center">
+                <h1 id="questiontext" class="display-5 fw-bold lh-1 mb-3"></h1>
+            </div>
+            <br>
+            <form class="needs-validation" novalidate="">
+                <div class="row g-3">
+                    <div id="divoptions" class="my-3">
+                        <div class="form-check">
+                            <input id="credit" name="paymentMethod" type="radio" class="form-check-input" required="">
+                            <label class="form-check-label" for="credit">
+                                조직이 어떠한 방식으로든 ESG 정보를 공시하지 않는 경우
+                            </label>
+                        </div>
+                        <br>
+                        <div class="form-check">
+                            <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required="">
+                            <label class="form-check-label" for="debit">
+                                조직의 홈페이지 지속가능경영보고서, 사업보고서, 기타 간행물 등에 ESG 정보를 분산하여 공시하고 있는 경우
+                            </label>
+                        </div>
+                        <br>
+                        <div class="form-check">
+                            <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required="">
+                            <label class="form-check-label" for="paypal">
+                                조직의 홈페이지 지속가능경영보고서, 사업보고서, 기타 간행물 등에 ESG 정보를 통합하여 공시하고 있는 경우
+                            </label>
+                        </div>
+                        <br>
+                        <div class="form-check">
+                            <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required="">
+                            <label class="form-check-label" for="paypal">
+                                ESG 정보를 통합한 조직의 홈페이지, 지속가능경영보고서, 사업보고서, 기타 간행물 등을 지정된 장소에 비치하거나, 특정 URL에 담고
+                                있는
+                                경우
+                            </label>
+                        </div>
+                        <br>
+                        <div class="form-check">
+                            <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required="">
+                            <label class="form-check-label" for="paypal">
+                                "ESG 정보를 통합한 조직의 홈페이지, 지속가능경영보고서, 사업보고서, 기타 간행물 등의 발행여부를 '전자공시시스템-자율공시' 사항으로
+                                알리는
+                                경우"
+                            </label>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <br>
+                <br>
+
+                <div id="divbuttons" class="mb-5">
+                    <a type="button" class="btn btn-light btn-lg" href="/inforegister"><i class="fa fa-chevron-left"
+                            aria-hidden="true"></i> 뒤로</a>
+                    <a class="btn btn-primary btn-lg px-4 me-sm-3 float-end" onclick="getQuestion()">다음</a>
+                </div>
+
+
+                <!--
+                <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+            -->
+            </form>
+        </div>
+    </div>
+
+</div>
+<script>
+    var questionumb = 0;
+    var questionlist = {};
+
+    $(document).ready(function () {
+        // Code to be executed after the page has finished loading
+        // Call your function or perform any desired operations here
+        getQuestionList();
+    });
+
+
+    function getQuestionList() {
+        // Your logic for making the call to the server
+        // You can use jQuery's AJAX function to send a request to your server-side endpoint
+
+        // Example using AJAX:
+        $.ajax({
+            url: '/questionssql',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                // Handle the response data
+                console.log(data);
+                splitdatajson(data);
+            },
+            error: function (error) {
+                // Handle any errors
+                console.error('Error:', error);
+            }
+        });
+    }
+
+
+    function splitdatajson(data) {
+        console.log('split');
+        var jsondatalist = [];
+        data.forEach(question => {
+            var jsonquestion = {};
+            var optionlist = [];
+            var answerlist = question.answer.split("_");
+            answerlist.forEach(option => {
+                var oneoption = option.split("@");
+                optionlist.push(oneoption);
+            })
+            jsonquestion = {
+                'ID': question.ID,
+                'SCQID': question.SCQID,
+                'answer': optionlist,
+                'question': question.question,
+                'type': question.type
+            }
+            jsondatalist.push(jsonquestion);
+            questionlist = jsondatalist;
+        });
+        getQuestion(0)
+    }
+
+    function getQuestion(questionumb) {
+        var questdata = questionlist[questionumb];
+        drawpage(questdata);
+    }
+
+    function drawpage(data) {
+        var questionText = data.question;
+        $('#questiontext').text(questionText);
+        var part = data.SCQID.split("-");
+
+        switch (part[0]) {
+            case "E":
+                $("#partE").addClass('on');
+                $("#partS").removeClass('on');
+                $("#partG").removeClass('on');
+                break
+            case "S":
+                $("#partS").addClass('on');
+                $("#partG").removeClass('on');
+                break
+            case "G":
+                $("#partG").addClass('on');
+                break
+            default:
+                $("#partP").addClass('on');
+                $("#partE").removeClass('on');
+                $("#partS").removeClass('on');
+                $("#partG").removeClass('on');
+        }
+
+
+
+        switch (data.type) {
+            case 1:
+                questiontype1(data.answer);
+                break;
+            case 2:
+                questiontype2(data.answer);
+                break;
+            case 3:
+                questiontype3(data.answer);
+                break;
+            default:
+                questiontype1(data.answer);
+        }
+
+        var contentbuttons = "";
+        console.log(questionumb);
+        if (questionumb == 0) {
+            contentbuttons = '<a type="button" class="btn btn-light btn-lg" href="/inforegister"><i class="fa fa-chevron-left"aria-hidden="true"></i> 뒤로</a><a class="btn btn-primary btn-lg px-4 me-sm-3 float-end" onclick="nextpage(' + questionumb + ')">다음</a>'
+        } else if (questionumb + 1 == questionlist.length) {
+            contentbuttons = '<a type="button" class="btn btn-light btn-lg" onclick=backpage(' + questionumb + ')><i class="fa fa-chevron-left"aria-hidden="true"></i> 뒤로</a><a class="btn btn-primary btn-lg px-4 me-sm-3 float-end" href="/report">다음</a>'
+        } else {
+            contentbuttons = '<a type="button" class="btn btn-light btn-lg" onclick=backpage(' + questionumb + ')><i class="fa fa-chevron-left"aria-hidden="true"></i> 뒤로</a><a class="btn btn-primary btn-lg px-4 me-sm-3 float-end" onclick="nextpage(' + questionumb + ')">다음</a>'
+        }
+        $('#divbuttons').html(contentbuttons);
+    }
+
+    function backpage() {
+        questionumb = questionumb - 1;
+        console.log(questionumb);
+        getQuestion(questionumb);
+    }
+
+    function nextpage() {
+        questionumb = questionumb + 1;
+        console.log(questionumb);
+        getQuestion(questionumb);
+    }
+
+
+
+    function questiontype1(options) {
+        console.log('questiontype1');
+        console.log(options);
+        var contenthtml = "";
+
+        for (i = 0; i < options.length; i++) {
+            let opttext = options[i][0]
+            let optresult = opttext.replaceAll('"', '');
+
+            contenthtml += '<div class="form-check"><input id="credit" name="paymentMethod" type="radio" class="form-check-input" required=""><label class="form-check-label" for="credit">'
+                + optresult
+                + '</label></div><br>';
+        }
+        $('#divoptions').html(contenthtml);
+    }
+
+    function questiontype2(options) {
+        console.log('questiontype2');
+        console.log(options);
+    }
+
+
+    function questiontype3(options) {
+        console.log('questiontype3');
+        console.log(options);
+        var contenthtml = "";
+
+        for (i = 0; i < options.length; i++) {
+            let opttext = options[i][2];
+            let optresult = opttext.replaceAll('"', '');
+            console.log(options[i][2]);
+            var selectradio = '';
+            var selectlist = optresult.split('-');
+
+            for (j = 0; j < selectlist.length; j++) {
+                selectradio += '<input type="radio" class="btn-check" style="width:80%" name="options' + i + j + '" id="option' + i + j + '" autocomplete="off"><label class="col btn btn-outline-primary selectoption mx-1" for="option' + i + j + '">' + selectlist[j] + '</label>'
+            }
+
+
+
+            contenthtml += '<div><h4>' + options[i][0].replaceAll('"', '') + '</h4><label class="form-check-label" for="credit">' +
+                options[i][1] + '</label><br><br><div class="row mx-auto"style="">'
+                + selectradio + '</div></div><br>'
+
+
+        }
+        $('#divoptions').html(contenthtml);
+    }
+
+
+
+</script>

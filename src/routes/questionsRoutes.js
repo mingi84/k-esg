@@ -5,7 +5,7 @@ const router = express.Router();
 
 // Questions route
 router.get('/', (req, res) => {
-  res.render('./layouts/infoquiz.ejs', { title: 'Questions' });
+  res.render('./layouts/question.ejs', { title: 'Questions' });
 });
 
 // Questions route
