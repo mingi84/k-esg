@@ -38,6 +38,7 @@ require("./src/routes/question.routes.js")(app);
 require("./src/routes/session.routes.js")(app);
 require("./src/routes/category.routes.js")(app);
 require("./src/routes/checkhistory.routes.js")(app);
+require("./src/routes/userinfo.routes.js")(app);
 
 // Start the server
 app.listen(port, () => {
