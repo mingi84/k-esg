@@ -44,7 +44,7 @@
 
                     <div class="col-12">
                         <label for="companyname" class="form-label">회사명</label>
-                        <input type="text" class="form-control" id="companyname" placeholder="">
+                        <input type="text" class="form-control" id="company" placeholder="">
                         <div class="invalid-feedback">
                             Please enter a valid company name updates.
                         </div>
@@ -53,8 +53,7 @@
 
                     <div class="col-sm-6">
                         <label for="userName" class="form-label">이름</label>
-                        <input type="text" class="form-control" id="userName" placeholder="" value=""
-                            required="">
+                        <input type="text" class="form-control" id="name" placeholder="" value="" required="">
                         <div class="invalid-feedback">
                             Valid name is required.
                         </div>
@@ -62,8 +61,8 @@
 
                     <div class="col-sm-6">
                         <label for="phoneNumber" class="form-label">연락처</label>
-                        <input type="text" class="form-control" id="phoneNumber" placeholder="00-0000-0000"
-                            value="" required="">
+                        <input type="text" class="form-control" id="phone" placeholder="00-0000-0000" value=""
+                            required="">
                         <div class="invalid-feedback">
                             Valid phone number is required.
                         </div>
@@ -84,8 +83,7 @@
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="termscheck">
                     <label class="form-check-label" for="flexCheckDefault">
-                        <a class="txt2" data-toggle="modal" data-target="#termsModal"
-                            style="cursor: pointer;">
+                        <a class="txt2" data-toggle="modal" data-target="#termsModal" style="cursor: pointer;">
                             개인정보 수집 및 이용 동의
                         </a>
                     </label>
@@ -95,8 +93,8 @@
                 <br>
                 <div class="mb-5">
                     <a type="button" class="btn btn-light btn-lg" href="/homepage"><i class="fa fa-chevron-left"
-                        aria-hidden="true"></i> 뒤로</a>    
-                    <a class="btn btn-primary btn-lg px-4 me-sm-3 float-end" href="/questions">다음</a>
+                            aria-hidden="true"></i> 뒤로</a>
+                    <a class="btn btn-primary btn-lg px-4 me-sm-3 float-end" onclick="saveuserdata()">다음</a>
                 </div>
 
 
@@ -109,8 +107,8 @@
     </div><!--end Row-->
 
 </div><!--end Container-->
-<div class="modal fade show" id="termsModal" tabindex="-1" aria-labelledby="termsModalTitle"
-    style="display: none;" aria-modal="true" role="dialog">
+<div class="modal fade show" id="termsModal" tabindex="-1" aria-labelledby="termsModalTitle" style="display: none;"
+    aria-modal="true" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
@@ -177,11 +175,60 @@
 
             </div>
             <div class="modal-footer justify-content-center" style="border-top: none;">
-                <button type="button" class="btn btn-primary" style="padding: 5px 24px;"
-                    data-dismiss="modal" onclick="checkterms()">
+                <button type="button" class="btn btn-primary" style="padding: 5px 24px;" data-dismiss="modal"
+                    onclick="checkterms()">
                     확인
                 </button>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function saveuserdata() {
+        var inputCompany = $('#company').val();
+        var inputName = $('#name').val();
+        var inputPhone = $('#phone').val();
+        var inputEmail = $('#email').val();
+
+        var userdate = {
+            "name": inputName,
+            "company": inputCompany,
+            "phone": inputPhone,
+            "email": inputEmail
+        }
+
+        $.ajax({
+            url: '/userinfosql',
+            method: 'post',
+            dataType: 'json',
+            data: JSON.stringify(userdate), // JSON body
+            contentType: 'application/json', // Set content type to JSON
+            success: function (data) {
+                // Handle the response data
+                console.log(data);
+                if(data[0] == null || data[0] == []) {
+                    saveuserdata();
+                } else {
+                    //console.log(data[0].ID);
+                    window.location.href = '/questions';
+                }
+            },
+            error: function (error) {
+                // Handle any errors
+                console.error('Error:', error);
+            }
+        });
+
+
+
+    }
+
+
+
+
+    const PARAMETER = new URLSearchParams( window.location.search);
+    const USER_ID = PARAMETER.get("ID");
+
+
+</script>
