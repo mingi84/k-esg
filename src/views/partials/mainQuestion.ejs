@@ -103,7 +103,7 @@
     var questionumb = 0;
     var questionlist = {};
     var questtype = 0;
-    var dataanswer = "";
+    var dataanswer = [];
 
     var myStorage = window.sessionStorage;
     var userID = myStorage.getItem("ID");
@@ -167,7 +167,8 @@
     }
 
     function drawpage(data) {
-        var questionText = data.question + '<input type="text" id="scqidinput" value="'+ data.SCQID +'" style="display:none;">';
+        console.log(data);
+        var questionText = data.question + '<input type="text" id="scqidinput" value="' + data.ID + '@' + data.type + '@' + data.SCQID + '" style="display:none;">';
         $('#questiontext').html(questionText);
         var part = data.SCQID.split("-");
 
@@ -213,9 +214,9 @@
         if (questionumb == 0) {
             contentbuttons = '<a type="button" class="btn btn-light btn-lg" href="/inforegister"><i class="fa fa-chevron-left"aria-hidden="true"></i> 뒤로</a><a class="btn btn-primary btn-lg px-4 me-sm-3 float-end" onclick="nextpage(' + questionumb + ')">다음</a>'
         } else if (questionumb + 1 == questionlist.length) {
-            contentbuttons = '<a type="button" class="btn btn-light btn-lg" onclick=backpage(' 
-            + questionumb 
-            + ')><i class="fa fa-chevron-left"aria-hidden="true"></i> 뒤로</a><a class="btn btn-primary btn-lg px-4 me-sm-3 float-end" onclick="senddataanswer()">다음</a>'
+            contentbuttons = '<a type="button" class="btn btn-light btn-lg" onclick=backpage('
+                + questionumb
+                + ')><i class="fa fa-chevron-left"aria-hidden="true"></i> 뒤로</a><a class="btn btn-primary btn-lg px-4 me-sm-3 float-end" onclick="senddataanswer()">다음</a>'
         } else {
             contentbuttons = '<a type="button" class="btn btn-light btn-lg" onclick=backpage(' + questionumb + ')><i class="fa fa-chevron-left"aria-hidden="true"></i> 뒤로</a><a class="btn btn-primary btn-lg px-4 me-sm-3 float-end" onclick="nextpage(' + questionumb + ')">다음</a>'
         }
@@ -246,7 +247,27 @@
         }
         var questSCQID = document.getElementById("scqidinput");
         var questvalue = questSCQID.value;
-        dataanswer += 'qtype=1_SCQID='+ questvalue +'_point=' + selectedValue + ',';
+        var textanswer = questvalue + '@' + selectedValue;
+        var splittextans = textanswer.split("@");
+        console.log(splittextans);
+        console.log(splittextans[0]);
+
+        var objID = splittextans[0];
+        var objType = splittextans[1]
+        var objSCQID = splittextans[2];
+        var objanswer = splittextans[3];
+        var objpoint = splittextans[4];
+
+
+
+        var jsondataans = {
+            "ID": objID,
+            "SCQID": objSCQID,
+            "type": objType,
+            "answer": objanswer,
+            "point": objpoint
+        }
+        dataanswer.push(jsondataans);
 
         console.log(dataanswer);
 
@@ -258,10 +279,10 @@
 
         var responsedata = {
             "userID": userID,
-            "epoints":dataanswer,
-            "spoints":dataanswer,
-            "gpoints":dataanswer,
-            "totalpoints":70,            
+            "epoints": JSON.stringify(dataanswer),
+            "spoints": JSON.stringify(dataanswer),
+            "gpoints": JSON.stringify(dataanswer),
+            "totalpoints": 70,
         }
 
 
@@ -275,7 +296,7 @@
             success: function (data) {
                 console.log(data);
                 // Handle the response data
-                    window.location.href = '/report';
+                window.location.href = '/report';
             },
             error: function (error) {
                 // Handle any errors
@@ -298,8 +319,8 @@
             var point = options[i][1]
             let optresult = opttext.replaceAll('"', '');
 
-            contenthtml += '<div class="form-check"><input id="credit" name="radiooption" type="radio" class="form-check-input" required="" value="'
-                + point + '"><label class="form-check-label" for="credit">'
+            contenthtml += '<div class="form-check"><input id="answeroption" name="radiooption" type="radio" class="form-check-input" required="" value="'
+                + optresult + '@' + point + '"><label class="form-check-label" for="answeroption">'
                 + optresult
                 + '</label></div><br>';
         }
