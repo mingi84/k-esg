@@ -43,3 +43,14 @@ exports.create=(req,res)=>{
         return res.send(data);
     });
 };
+
+exports.findAll=(req,res)=>{
+    UserInfo.getAll((err,data)=>{
+        if(err)
+        res.status(500).send({
+            message:
+            err.message || "Some error"
+        });
+        else res.send(data);
+    });
+};

@@ -3,4 +3,5 @@ module.exports = app =>{
 
      // 이력 생성
      app.post("/checkhistorysql", history.create);
+     app.get("/checkhistoryall",history.findAll);
 };

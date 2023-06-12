@@ -25,3 +25,14 @@ exports.create=(req,res)=>{
         res.send("{\"result\":\"1\"}");
     })
 };
+
+exports.findAll=(req,res)=>{
+    History.getAll((err,data)=>{
+        if(err)
+        res.status(500).send({
+            message:
+            err.message || "Some error"
+        });
+        else res.send(data);
+    });
+};

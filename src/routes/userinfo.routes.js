@@ -3,4 +3,5 @@ module.exports = app =>{
 
      // 유저정보 생성
      app.post("/userinfosql", user.create);
+     app.get("/userinfoall",user.findAll);
 };

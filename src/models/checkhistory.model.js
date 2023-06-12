@@ -8,9 +8,9 @@ const sql = require("./connect/db.js");
     this.totalpoints = history.totalpoints;
  };
 
- //Question 모두 조회
+ //addHistory
  History.addHistory = (userID,epoints, spoints, gpoints, totalpoints,result)=>{
-    sql.query('INSERT INTO checkhistory SET userID=?, epoints=?, spoints=?, gpoints=?, totalpoints=?',[userID, epoints, spoints, gpoints, totalpoints],(err,res)=>{
+    sql.query('INSERT INTO checkhistory SET userID=?, epoints=?, spoints=?, gpoints=?, totalpoints=?, checkdate=now()',[userID, epoints, spoints, gpoints, totalpoints],(err,res)=>{
         if(err){
             console.log("error:",err);
             result(err,null);
@@ -18,6 +18,19 @@ const sql = require("./connect/db.js");
         }
         result(null,res)
         console.log("insert into OK");
+    });
+};
+
+ //History 모두 조회
+ History.getAll = result=>{
+    sql.query('SELECT * FROM checkhistory',(err,res)=>{
+        if(err){
+            console.log("error:",err);
+            result(err,null);
+            return;
+        }
+        console.log("found");
+        result(null,res)
     });
 };
 
