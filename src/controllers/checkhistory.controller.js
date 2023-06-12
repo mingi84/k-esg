@@ -36,3 +36,26 @@ exports.findAll=(req,res)=>{
         else res.send(data);
     });
 };
+
+exports.getHistory=(req,res)=>{
+    History.getAll((err,data)=>{
+        if(err)
+        res.status(500).send({
+            message:
+            err.message || "Some error"
+        });
+        else res.send(data);
+    });
+};
+
+exports.getHistoryByID=(req,res)=>{
+    History.getHistoryByID(req.params.checkID,(err,data)=>{
+        if(err)
+        res.status(500).send({
+            message:
+            err.message || "Some error"
+        });
+        else res.send(data);
+    });
+};
+

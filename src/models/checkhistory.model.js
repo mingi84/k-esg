@@ -34,4 +34,17 @@ const sql = require("./connect/db.js");
     });
 };
 
+History.getHistoryByID = (ID,result)=>{
+    sql.query('SELECT * FROM checkhistory WHERE ID=?',ID,(err,res)=>{
+        if(err){
+            console.log("error:",err);
+            result(err,null);
+            return;
+        }
+        console.log("found");
+        result(null,res)
+    });
+};
+
+
 module.exports = History;
