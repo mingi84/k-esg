@@ -104,6 +104,7 @@
     var questionlist = {};
     var questtype = 0;
     var dataanswer = [];
+    var reportdata = [];
 
     var myStorage = window.sessionStorage;
     var userID = myStorage.getItem("ID");
@@ -174,16 +175,16 @@
 
 
 
-        if (questionumb >0 && questionumb <= 3 ) {
+        if (questionumb > 0 && questionumb <= 3) {
             spandivP.innerText = questionumb + 1 + "/4";
-        } else if (questionumb >3 && questionumb <= 12 ) {
+        } else if (questionumb > 3 && questionumb <= 12) {
             spandivP.innerText = "4/4";
             spandivE.innerText = questionumb - 3 + "/9";
-        } else if (questionumb >12 && questionumb <= 21 ) {
+        } else if (questionumb > 12 && questionumb <= 21) {
             spandivP.innerText = "4/4";
             spandivE.innerText = "9/9";
             spandivS.innerText = questionumb - 12 + "/9";
-        } else if (questionumb >21 && questionumb <= 26 ) {
+        } else if (questionumb > 21 && questionumb <= 26) {
             spandivP.innerText = "4/4";
             spandivE.innerText = "9/9";
             spandivS.innerText = "9/9";
@@ -292,18 +293,25 @@
             var objSCQID = splittextans[2];
             var objanswer = splittextans[3];
             var objpoint = splittextans[4];
-
+            var sectionid = objSCQID.split("-")
 
 
             var jsondataans = {
                 "ID": objID,
                 "quest": {
+                    "PESG": sectionid[0],
                     "SCQID": objSCQID,
                     "type": objType,
                     "answer": objanswer,
                     "point": parseInt(objpoint)
                 }
             }
+            var reportitem = {
+                "PESG": sectionid[0],
+                "point": objpoint
+            }
+            reportdata.push(reportitem);
+
             dataanswer.push(jsondataans);
 
         } else
@@ -324,21 +332,25 @@
                 });
 
                 var objpoint = 0;
-
+                console.log('check values type 5')
+                console.log(checkedValues.length);
                 switch (checkedValues.length) {
                     case 0:
                         objpoint = 0;
                         break
                     case 1:
-                        objpoint = 25;
+                        objpoint = 0;
                         break
                     case 2:
-                        objpoint = 50;
+                        objpoint = 25;
                         break
                     case 3:
-                        objpoint = 75;
+                        objpoint = 50;
                         break
                     case 4:
+                        objpoint = 75;
+                        break
+                    case 5:
                         objpoint = 100;
                         break
                     default:
@@ -354,17 +366,25 @@
                 var objID = splittextans[0];
                 var objType = splittextans[1]
                 var objSCQID = splittextans[2];
+                var sectionid = objSCQID.split("-");
                 var objanswer = JSON.stringify(checkedValues);
 
                 var jsondataans = {
                     "ID": objID,
                     "quest": {
+                        "PESG": sectionid[0],
                         "SCQID": objSCQID,
                         "type": objType,
                         "answer": objanswer,
                         "point": objpoint
                     }
                 }
+                var reportitem = {
+                    "PESG": sectionid[0],
+                    "point": objpoint
+                }
+                reportdata.push(reportitem);
+
                 dataanswer.push(jsondataans);
             } else
                 if (questtype == 10) {
@@ -395,9 +415,9 @@
                     console.log(splittextans[0]);
 
                     var objID = splittextans[0];
-                    var objType = splittextans[1]
+                    var objType = splittextans[1];
                     var objSCQID = splittextans[2];
-
+                    var sectionid = objSCQID.split("-");
                     var answerlist = []
                     var pointlist = []
                     for (l = 0; l < checkedValues.length; l++) {
@@ -409,24 +429,31 @@
 
 
                     var objanswer = JSON.stringify(answerlist);
-                    var objpoint = JSON.stringify(sumArray(pointlist));
+                    var objpoint = sumArray(pointlist);
 
 
 
                     var jsondataans = {
                         "ID": objID,
                         "quest": {
+                            "PESG": sectionid[0],
                             "SCQID": objSCQID,
                             "type": objType,
                             "answer": objanswer,
                             "point": objpoint
                         }
                     }
+                    var reportitem = {
+                        "PESG": sectionid[0],
+                        "point": objpoint
+                    }
+                    reportdata.push(reportitem);
                     dataanswer.push(jsondataans);
 
                 }
 
         console.log(dataanswer);
+        console.log(reportdata);
     }
 
     function sumArray(array) {
@@ -495,8 +522,8 @@
             var point = optionlist[i][1]
             let optresult = opttext.replaceAll('"', '');
 
-            contenthtml += '<div class="form-check"><input id="answeroption" name="radiooption" type="radio" class="form-check-input" required="" value="'
-                + optresult + '@' + point + '"><label class="form-check-label" for="answeroption">'
+            contenthtml += '<div class="form-check"><input id="radiooption' + i + '" name="radiooption" type="radio" class="form-check-input" required="" value="'
+                + optresult + '@' + point + '"><label class="form-check-label" for="radiooption' + i + '">'
                 + optresult
                 + '</label></div><br>';
         }
@@ -525,8 +552,8 @@
             let optresult = opttext.replaceAll('"', '');
 
 
-            contenthtml += '<div class="form-check"><input id="answeroption" name="radiooption" type="checkbox" class="form-check-input" required="" value="'
-                + optresult + '"><label class="form-check-label" for="answeroption">'
+            contenthtml += '<div class="form-check"><input id="radiooption' + i + '" name="radiooption" type="radio" class="form-check-input" required="" value="'
+                + optresult + '"><label class="form-check-label" for="radiooption' + i + '">'
                 + optresult
                 + '</label></div><br>';
         }
@@ -571,7 +598,7 @@
 
             for (j = 0; j < selectlist.length; j++) {
                 var point = selectlist[j][1]
-                selectradio += '<input type="radio" class="btn-check" style="width:80%" name="options' + i + j + '" id="option' + i + j + '" autocomplete="off" value="' + selectlist[j][0] + '@' + point.replaceAll('”', '') + '"><label class="btn btn-outline-primary selectoption mx-1 my-2" for="option' + i + j + '">' + selectlist[j][0] + '</label>'
+                selectradio += '<input type="radio" class="btn-check" style="width:80%" name="options' + i + '" id="option' + i + j + '" autocomplete="off" value="' + selectlist[j][0] + '@' + point.replaceAll('”', '') + '"><label class="btn btn-outline-primary selectoption mx-1 my-2" for="option' + i + j + '">' + selectlist[j][0] + '</label>'
             }
 
 
