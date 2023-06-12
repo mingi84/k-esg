@@ -176,6 +176,22 @@ h4 {
     
 }
 
+.home-bg-slide {
+    background-image: url('../img/homebg2.png');
+    height: 40vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.4;
+}
+
+/* Centered text */
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
 
 
 .home-bg-image {
