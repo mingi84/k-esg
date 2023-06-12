@@ -2,7 +2,7 @@
 Description=ESG Service
 
 [Service]
-ExecStart=/usr/bin/node
+ExecStart=/usr/bin/node /root/kesgsite/app.js
 Restart=always
 
 # RHEL/Fedora 계열은 Group=nogroup 대신 User=nobody를 사용한다고 한다
