@@ -1,4 +1,3 @@
-
 <br>
 <div id="progress">
     <div class="part on">
@@ -40,32 +39,28 @@
                 <div class="row g-3">
                     <div class="my-3">
                         <div class="form-check">
-                            <input id="credit" name="paymentMethod" type="radio" class="form-check-input"
-                                required="">
+                            <input id="credit" name="paymentMethod" type="radio" class="form-check-input" required="">
                             <label class="form-check-label" for="credit">
                                 조직이 어떠한 방식으로든 ESG 정보를 공시하지 않는 경우
                             </label>
                         </div>
                         <br>
                         <div class="form-check">
-                            <input id="debit" name="paymentMethod" type="radio" class="form-check-input"
-                                required="">
+                            <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required="">
                             <label class="form-check-label" for="debit">
                                 조직의 홈페이지 지속가능경영보고서, 사업보고서, 기타 간행물 등에 ESG 정보를 분산하여 공시하고 있는 경우
                             </label>
                         </div>
                         <br>
                         <div class="form-check">
-                            <input id="paypal" name="paymentMethod" type="radio" class="form-check-input"
-                                required="">
+                            <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required="">
                             <label class="form-check-label" for="paypal">
                                 조직의 홈페이지 지속가능경영보고서, 사업보고서, 기타 간행물 등에 ESG 정보를 통합하여 공시하고 있는 경우
                             </label>
                         </div>
                         <br>
                         <div class="form-check">
-                            <input id="paypal" name="paymentMethod" type="radio" class="form-check-input"
-                                required="">
+                            <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required="">
                             <label class="form-check-label" for="paypal">
                                 ESG 정보를 통합한 조직의 홈페이지, 지속가능경영보고서, 사업보고서, 기타 간행물 등을 지정된 장소에 비치하거나, 특정 URL에 담고
                                 있는
@@ -74,8 +69,7 @@
                         </div>
                         <br>
                         <div class="form-check">
-                            <input id="paypal" name="paymentMethod" type="radio" class="form-check-input"
-                                required="">
+                            <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required="">
                             <label class="form-check-label" for="paypal">
                                 "ESG 정보를 통합한 조직의 홈페이지, 지속가능경영보고서, 사업보고서, 기타 간행물 등의 발행여부를 '전자공시시스템-자율공시' 사항으로
                                 알리는
@@ -92,7 +86,7 @@
 
                 <div class="mb-5">
                     <a type="button" class="btn btn-light btn-lg" href="/inforegister"><i class="fa fa-chevron-left"
-                        aria-hidden="true"></i> 뒤로</a>    
+                            aria-hidden="true"></i> 뒤로</a>
                     <a class="btn btn-primary btn-lg px-4 me-sm-3 float-end" href="/questions/enviro">다음</a>
                 </div>
 
@@ -105,3 +99,38 @@
     </div>
 
 </div>
+
+<script>
+
+function transformInputString(inputString) {
+  var sections = inputString.split('_');
+
+  var transformedSections = sections.map(function(section) {
+    var parts = section.split('>');
+
+    var subquesttitle = parts[0].trim();
+    var options = parts[1].split('|');
+
+    var transformedOptions = options.map(function(option) {
+      var values = option.split('@').map(function(value) {
+        return value.trim();
+      });
+
+      return values;
+    });
+
+    return {
+      subquesttitle: subquesttitle,
+      options: transformedOptions
+    };
+  });
+
+  return transformedSections;
+}
+
+var inputString = '현재수준>해당사항없음@0|직전 1개년 원단위 원부자재 사용량 당해년도 산업 평균 초과@0|직전 1개년 원단위 원부자재 사용량 당해년도 산업 평균 동일@50|직전 1개년 원단위 사용량 당해년도 산업 평균 미만@100"_“추세>해당사항없음@0|지난 5개년 원단위 원부자재 사용량 증가 추세@0|지난 5개년 원단위 원부자재 사용량 변동 없음@50|지난 5개년 원단위 원부자재 사용량 감소 추세@100”';
+var transformedArray = transformInputString(inputString);
+
+console.log(JSON.stringify(transformedArray, null, 2));
+
+</script>

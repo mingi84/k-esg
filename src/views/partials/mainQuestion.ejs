@@ -139,25 +139,9 @@
 
     function splitdatajson(data) {
         console.log('split');
-        var jsondatalist = [];
-        data.forEach(question => {
-            var jsonquestion = {};
-            var optionlist = [];
-            var answerlist = question.answer.split("_");
-            answerlist.forEach(option => {
-                var oneoption = option.split("@");
-                optionlist.push(oneoption);
-            })
-            jsonquestion = {
-                'ID': question.ID,
-                'SCQID': question.SCQID,
-                'answer': optionlist,
-                'question': question.question,
-                'type': question.type
-            }
-            jsondatalist.push(jsonquestion);
-            questionlist = jsondatalist;
-        });
+        questionlist = data;
+        console.log(questionlist);
+
         getQuestion(0)
     }
 
@@ -168,10 +152,12 @@
 
     function drawpage(data) {
         console.log(data);
+        questtype = data.type;
         var questionText = data.question + '<input type="text" id="scqidinput" value="' + data.ID + '@' + data.type + '@' + data.SCQID + '" style="display:none;">';
         $('#questiontext').html(questionText);
         var part = data.SCQID.split("-");
 
+        //progress bar
         switch (part[0]) {
             case "E":
                 $("#partE").addClass('on');
@@ -199,11 +185,14 @@
                 questtype = 1;
                 questiontype1(data.answer);
                 break;
-            case 2:
-                questiontype2(data.answer);
+            case 11:
+                questiontype1(data.answer);
                 break;
-            case 3:
-                questiontype3(data.answer);
+            case 5:
+                questiontype5(data.answer);
+                break;
+            case 10:
+                questiontype10(data.answer);
                 break;
             default:
                 questiontype1(data.answer);
@@ -233,6 +222,16 @@
         questionumb = questionumb + 1;
         console.log(questionumb);
         console.log(questtype);
+
+        addansreport();
+
+        getQuestion(questionumb);
+    }
+
+
+
+    function addansreport() {
+
         if (questtype == 1) {
             var radios = document.getElementsByName('radiooption');
             var selectedValue = '';
@@ -244,38 +243,172 @@
                 }
             }
             console.log(selectedValue);
-        }
-        var questSCQID = document.getElementById("scqidinput");
-        var questvalue = questSCQID.value;
-        var textanswer = questvalue + '@' + selectedValue;
-        var splittextans = textanswer.split("@");
-        console.log(splittextans);
-        console.log(splittextans[0]);
-
-        var objID = splittextans[0];
-        var objType = splittextans[1]
-        var objSCQID = splittextans[2];
-        var objanswer = splittextans[3];
-        var objpoint = splittextans[4];
 
 
 
-        var jsondataans = {
-            "ID": objID,
-            "SCQID": objSCQID,
-            "type": objType,
-            "answer": objanswer,
-            "point": objpoint
-        }
-        dataanswer.push(jsondataans);
+            var questSCQID = document.getElementById("scqidinput");
+            var questvalue = questSCQID.value;
+            var textanswer = questvalue + '@' + selectedValue;
+            var splittextans = textanswer.split("@");
+            console.log(splittextans);
+            console.log(splittextans[0]);
+
+            var objID = splittextans[0];
+            var objType = splittextans[1]
+            var objSCQID = splittextans[2];
+            var objanswer = splittextans[3];
+            var objpoint = splittextans[4];
+
+
+
+            var jsondataans = {
+                "ID": objID,
+                "quest": {
+                    "SCQID": objSCQID,
+                    "type": objType,
+                    "answer": objanswer,
+                    "point": parseInt(objpoint)
+                }
+            }
+            dataanswer.push(jsondataans);
+
+        } else
+            if (questtype == 5) {
+                var checkedValues = [];
+                // Listen for change event on the checkboxes
+
+                // Iterate over the checkboxes using forEach
+                $('input[type="checkbox"]').each(function (index, checkbox) {
+                    // Check if the checkbox is checked
+                    if ($(checkbox).is(':checked')) {
+                        // Get the value of the checked checkbox
+                        var value = $(checkbox).val();
+
+                        // Push the value onto the list
+                        checkedValues.push(value);
+                    }
+                });
+
+                var objpoint = 0;
+
+                switch (checkedValues.length) {
+                    case 0:
+                        objpoint = 0;
+                        break
+                    case 1:
+                        objpoint = 25;
+                        break
+                    case 2:
+                        objpoint = 50;
+                        break
+                    case 3:
+                        objpoint = 75;
+                        break
+                    case 4:
+                        objpoint = 100;
+                        break
+                    default:
+                        objpoint = 0;
+                }
+
+
+                var questSCQID = document.getElementById("scqidinput");
+                var questvalue = questSCQID.value;
+                var textanswer = questvalue + '@' + selectedValue;
+                var splittextans = textanswer.split("@");
+
+                var objID = splittextans[0];
+                var objType = splittextans[1]
+                var objSCQID = splittextans[2];
+                var objanswer = JSON.stringify(checkedValues);
+
+                var jsondataans = {
+                    "ID": objID,
+                    "quest": {
+                        "SCQID": objSCQID,
+                        "type": objType,
+                        "answer": objanswer,
+                        "point": objpoint
+                    }
+                }
+                dataanswer.push(jsondataans);
+            } else
+                if (questtype == 10) {
+
+                    var checkedValues = [];
+                    // Listen for change event on the checkboxes
+
+                    // Iterate over the checkboxes using forEach
+                    $('input[type="radio"]').each(function (index, radio) {
+                        // Check if the checkbox is checked
+                        if ($(radio).is(':checked')) {
+                            // Get the value of the checked checkbox
+                            var value = $(radio).val();
+
+                            // Push the value onto the list
+                            checkedValues.push(value);
+                        }
+                    });
+                    console.log(checkedValues);
+
+
+
+                    var questSCQID = document.getElementById("scqidinput");
+                    var questvalue = questSCQID.value;
+                    var textanswer = questvalue;
+                    var splittextans = textanswer.split("@");
+                    console.log(splittextans);
+                    console.log(splittextans[0]);
+
+                    var objID = splittextans[0];
+                    var objType = splittextans[1]
+                    var objSCQID = splittextans[2];
+
+                    var answerlist = []
+                    var pointlist = []
+                    for (l = 0; l < checkedValues.length; l++) {
+                        var respoint = checkedValues[l].split("@");
+                        answerlist.push(respoint[0]);
+                        pointlist.push(parseInt(respoint[1]));
+                    }
+
+
+
+                    var objanswer = JSON.stringify(answerlist);
+                    var objpoint = JSON.stringify(sumArray(pointlist));
+
+
+
+                    var jsondataans = {
+                        "ID": objID,
+                        "quest": {
+                            "SCQID": objSCQID,
+                            "type": objType,
+                            "answer": objanswer,
+                            "point": objpoint
+                        }
+                    }
+                    dataanswer.push(jsondataans);
+
+                }
 
         console.log(dataanswer);
-
-        getQuestion(questionumb);
     }
+
+    function sumArray(array) {
+        var sum = 0;
+
+        for (var i = 0; i < array.length; i++) {
+            sum += array[i];
+        }
+
+        return sum;
+    }
+
 
     function senddataanswer() {
         console.log(dataanswer);
+        addansreport();
 
         var responsedata = {
             "userID": userID,
@@ -314,9 +447,18 @@
         console.log(options);
         var contenthtml = "";
 
-        for (i = 0; i < options.length; i++) {
-            let opttext = options[i][0]
-            var point = options[i][1]
+        var optionlist = [];
+        var answerlist = options.split("_");
+        answerlist.forEach(option => {
+            var oneoption = option.split("@");
+            optionlist.push(oneoption);
+        })
+        console.log(optionlist);
+
+
+        for (i = 0; i < optionlist.length; i++) {
+            let opttext = optionlist[i][0]
+            var point = optionlist[i][1]
             let optresult = opttext.replaceAll('"', '');
 
             contenthtml += '<div class="form-check"><input id="answeroption" name="radiooption" type="radio" class="form-check-input" required="" value="'
@@ -327,32 +469,81 @@
         $('#divoptions').html(contenthtml);
     }
 
-    function questiontype2(options) {
-        console.log('questiontype2');
-        console.log(options);
-    }
-
-
-    function questiontype3(options) {
-        console.log('questiontype3');
+    function questiontype5(options) {
+        //multiselect
+        console.log('questiontype5');
         console.log(options);
         var contenthtml = "";
 
-        for (i = 0; i < options.length; i++) {
-            let opttext = options[i][2];
+        var optionlist = [];
+        var answerlist = options.split("_");
+        answerlist.forEach(option => {
+            var oneoption = option.split("@");
+            optionlist.push(oneoption);
+        })
+        console.log(optionlist);
+
+
+
+        for (i = 0; i < optionlist.length; i++) {
+            let opttext = optionlist[i][0]
+            var point = optionlist[i][1]
             let optresult = opttext.replaceAll('"', '');
-            console.log(options[i][2]);
+
+
+            contenthtml += '<div class="form-check"><input id="answeroption" name="radiooption" type="checkbox" class="form-check-input" required="" value="'
+                + optresult + '"><label class="form-check-label" for="answeroption">'
+                + optresult
+                + '</label></div><br>';
+        }
+        $('#divoptions').html(contenthtml);
+    }
+
+
+    function questiontype10(options) {
+        console.log('questiontype10');
+        console.log(options);
+        var contenthtml = "";
+
+        var sections = options.split('_');
+
+        var transformedSections = sections.map(function (section) {
+            var parts = section.split('>');
+
+            var subquesttitle = parts[0].trim();
+            var options = parts[1].split('|');
+
+            var transformedOptions = options.map(function (option) {
+                var values = option.split('@').map(function (value) {
+                    return value.trim();
+                });
+
+                return values;
+            });
+
+            return {
+                subquesttitle: subquesttitle,
+                options: transformedOptions
+            };
+        });
+
+        for (i = 0; i < transformedSections.length; i++) {
+            let opttext = transformedSections[i].options;
+
+            //let optresult = opttext.replaceAll('"', '');
+            console.log(options[i]);
             var selectradio = '';
-            var selectlist = optresult.split('-');
+            var selectlist = transformedSections[i].options;
 
             for (j = 0; j < selectlist.length; j++) {
-                selectradio += '<input type="radio" class="btn-check" style="width:80%" name="options' + i + j + '" id="option' + i + j + '" autocomplete="off"><label class="col btn btn-outline-primary selectoption mx-1" for="option' + i + j + '">' + selectlist[j] + '</label>'
+                var point = selectlist[j][1]
+                selectradio += '<input type="radio" class="btn-check" style="width:80%" name="options' + i + j + '" id="option' + i + j + '" autocomplete="off" value="' + selectlist[j][0] + '@' + point.replaceAll('”', '') + '"><label class="btn btn-outline-primary selectoption mx-1 my-2" for="option' + i + j + '">' + selectlist[j][0] + '</label>'
             }
 
 
+            console.log(transformedSections[i].subquesttitle);
 
-            contenthtml += '<div><h4>' + options[i][0].replaceAll('"', '') + '</h4><label class="form-check-label" for="credit">' +
-                options[i][1] + '</label><br><br><div class="row mx-auto"style="">'
+            contenthtml += '<div><h4>' + transformedSections[i].subquesttitle.replaceAll('“', '') + '</h4><div class="row mx-auto"style="">'
                 + selectradio + '</div></div><br>'
 
 
