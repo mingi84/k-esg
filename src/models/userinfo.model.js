@@ -33,6 +33,18 @@ UserInfo.getUser = (name,company,phone,email,result)=>{
     }); 
 };
 
+UserInfo.getUserByID = (ID,result)=>{
+    sql.query('SELECT name, company, phone, email FROM userinfo WHERE ID=?',ID,(err,res)=>{
+        if(err){
+            console.log("error:",err);
+            result(err,null);
+            return;
+        }
+        console.log("found");
+        result(null,res)
+    });
+};
+
 UserInfo.getAll = result=>{
     sql.query('SELECT * FROM userinfo',(err,res)=>{
         if(err){

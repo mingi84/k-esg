@@ -43,6 +43,16 @@ exports.create=(req,res)=>{
         return res.send(data);
     });
 };
+exports.findUserByID=(req,res)=>{
+    UserInfo.getUserByID(req.params.userID,(err,data)=>{
+        if(err)
+        res.status(500).send({
+            message:
+            err.message || "Some error"
+        });
+        else res.send(data);
+    });
+};
 
 exports.findAll=(req,res)=>{
     UserInfo.getAll((err,data)=>{
