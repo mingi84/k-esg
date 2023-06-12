@@ -8,22 +8,22 @@
     <div id="partP" class="part">
         <div class="desc"><span>정보공시</span></div>
         <div class="circle"><span>P</span></div>
-        <div class="stepnumb"><span>1/4</span></div>
+        <div id="pstepnumb" class="stepnumb"><span>1/4</span></div>
     </div>
     <div id="partE" class="part">
         <div class="desc"><span>환경</span></div>
         <div class="circle"><span>E</span></div>
-        <div class="stepnumb"><span>0/9</span></div>
+        <div id="estepnumb" class="stepnumb"><span>0/9</span></div>
     </div>
     <div id="partS" class="part">
         <div class="desc"><span>사회</span></div>
         <div class="circle"><span>S</span></div>
-        <div class="stepnumb"><span>0/9</span></div>
+        <div id="sstepnumb" class="stepnumb"><span>0/9</span></div>
     </div>
     <div id="partG" class="part">
         <div class="desc"><span>지배구조</span></div>
         <div class="circle"><span>G</span></div>
-        <div class="stepnumb"><span>0/5</span></div>
+        <div id="gstepnumb" class="stepnumb"><span>0/5</span></div>
     </div>
 </div>
 
@@ -150,12 +150,46 @@
         drawpage(questdata);
     }
 
+
+
+
     function drawpage(data) {
         console.log(data);
         questtype = data.type;
         var questionText = data.question + '<input type="text" id="scqidinput" value="' + data.ID + '@' + data.type + '@' + data.SCQID + '" style="display:none;">';
         $('#questiontext').html(questionText);
         var part = data.SCQID.split("-");
+        console.log('step number');
+        console.log(questionumb);
+        var spandivP = document.getElementById("pstepnumb");
+        var spandivE = document.getElementById("estepnumb");
+        var spandivS = document.getElementById("sstepnumb");
+        var spandivG = document.getElementById("gstepnumb");
+
+        spandivP.innerText = "1/4";
+        spandivE.innerText = "0/9";
+        spandivS.innerText = "0/9";
+        spandivG.innerText = "0/5";
+
+
+
+
+        if (questionumb >0 && questionumb <= 3 ) {
+            spandivP.innerText = questionumb + 1 + "/4";
+        } else if (questionumb >3 && questionumb <= 12 ) {
+            spandivP.innerText = "4/4";
+            spandivE.innerText = questionumb - 3 + "/9";
+        } else if (questionumb >12 && questionumb <= 21 ) {
+            spandivP.innerText = "4/4";
+            spandivE.innerText = "9/9";
+            spandivS.innerText = questionumb - 12 + "/9";
+        } else if (questionumb >21 && questionumb <= 26 ) {
+            spandivP.innerText = "4/4";
+            spandivE.innerText = "9/9";
+            spandivS.innerText = "9/9";
+            spandivG.innerText = questionumb - 21 + "/5";
+        }
+
 
         //progress bar
         switch (part[0]) {
