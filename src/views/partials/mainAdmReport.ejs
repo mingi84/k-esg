@@ -30,6 +30,10 @@
                     <th class="text-center">연락처</th>
                     <th class="text-center">이메일</th>
                     <th class="text-center">자가진단 날짜</th>
+                    <th class="text-center">P</th>
+                    <th class="text-center">E</th>
+                    <th class="text-center">S</th>
+                    <th class="text-center">G</th>
                     <th class="text-center">자가진단 결과</th>
                 </tr>
             </thead>
@@ -121,7 +125,7 @@
             row.appendChild(indexCell);
 
             const nameCell = document.createElement('td');
-            nameCell.textContent = jsonData[i].user[0].name;
+            nameCell.textContent = jsonData[i].user[0].company;
             nameCell.classList.add('text-center');
             row.appendChild(nameCell);
 
@@ -140,13 +144,45 @@
             emailCell.classList.add('text-center');
             row.appendChild(emailCell);
 
+
+            const checkdateTime = convertToKoreanTime(jsonData[i].data.checkdate);
+            console.log(checkdateTime);
             const dateCell = document.createElement('td');
-            dateCell.textContent = jsonData[i].data.checkdate;
+            dateCell.textContent = checkdateTime;
             dateCell.classList.add('text-center');
             row.appendChild(dateCell);
 
+            const checkdate = convertToKoreaDate(jsonData[i].data.checkdate);
+
+            var pointsum = JSON.parse(jsonData[i].data.gpoints);
+
+            const pointPCell = document.createElement('td');
+            pointPCell.textContent = pointsum.sumPoints.P;
+            pointPCell.classList.add('text-center');
+            row.appendChild(pointPCell);
+
+            const pointECell = document.createElement('td');
+            pointECell.textContent = pointsum.sumPoints.E;
+            pointECell.classList.add('text-center');
+            row.appendChild(pointECell);
+
+            const pointSCell = document.createElement('td');
+            pointSCell.textContent = pointsum.sumPoints.S;
+            pointSCell.classList.add('text-center');
+            row.appendChild(pointSCell);
+
+            const pointGCell = document.createElement('td');
+            pointGCell.textContent = pointsum.sumPoints.G;
+            pointGCell.classList.add('text-center');
+            row.appendChild(pointGCell);
+
+
+
+            var stringfilename = jsonData[i].user[0].company + "_" + jsonData[i].user[0].name + "_" + checkdate;
+            console.log(stringfilename);
+
             const downloadCell = document.createElement('td');
-            downloadCell.innerHTML = '<a onclick=downloadExcel(' + i + ',"filename.xlsx")>Download</a>';
+            downloadCell.innerHTML = '<a class="btn btn-primary btn-sm px-4 me-sm-3" onclick=downloadExcel(' + i + ',"' + stringfilename + '.xlsx")>Download</a>';
             downloadCell.classList.add('text-center');
             row.appendChild(downloadCell);
 
@@ -155,6 +191,27 @@
     }
 
 
+    function convertToKoreanTime(timestamp) {
+        const date = new Date(timestamp);
+        const koreaTime = date.toLocaleString('ko-KR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        });
+        return koreaTime;
+    }
+
+    function convertToKoreaDate(dateString) {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return year + month + day;
+    }
 
 
 
@@ -162,14 +219,22 @@
 
 
     function downloadExcel(i, filename) {
+        console.log(filename);
         const answerdata = concatlist[i];
-
+        console.log(answerdata);
         // Function to convert JSON to worksheet
         function jsonToWorksheet(answerdata) {
             const worksheetData = [];
 
-            // Add headers
-            const headers = ["Index", "ID", "PESG", "SCQID", "Type", "Answer", "Point"];
+            const titleinfo1 = ["Company", "Name", "Phone", "Email", "Date"];
+            worksheetData.push(titleinfo1);
+            const titleinfo2 = [answerdata.user[0].company, answerdata.user[0].name, answerdata.user[0].phone, answerdata.user[0].email, convertToKoreanTime(answerdata.data.checkdate)];
+            worksheetData.push(titleinfo2);
+            worksheetData.push([]);
+
+
+            // Add headers            PESG     SCQID    Title       Point       
+            const headers = ["Index", "영역", "분류번호", "진단항목", "자가진단 결과", "Answer"];
             worksheetData.push(headers);
 
             // Parse epoints string into an array
@@ -179,6 +244,7 @@
             } catch (error) {
                 console.error("Error parsing epoints string:", error);
             }
+            var listtitleArray = ["ESG 정보공시 방식", "ESG 정보공시 주기", "ESG 정보공시 범위", "ESG 정보공시 검증", "환경경영 추진체계", "원부자재 사용량", "온실가스 배출량<br>(Scop1 & Scope2)", "온실가스 배출량 검증", "에너지 사용량", "용수 사용량", "폐기물 배출량", "대기오염물질 배출량", "수질오염물질 배출량", "정규직 비율", "결사의 자유 보장", "여성 구성원 비율", "여성 급여 비율<br>(평균 급여액 대비)", "장애인 고용률", "안전보건 추진체계", "산업재해율", "전략적 사회공헌", "구성원 봉사참여", "이사회 내 ESG 안건 상정", "전체 이사 출석률", "이사회 안건 처리", "주주총회 소집 공고", "윤리규범 위반사항 공시"];
 
             // Check if epointsArray is an array
             if (Array.isArray(epointsArray)) {
@@ -186,18 +252,54 @@
                 epointsArray.forEach((item, index) => {
                     const row = [
                         index + 1,
-                        item.ID,
                         item.quest.PESG,
                         item.quest.SCQID,
-                        item.quest.type,
-                        item.quest.answer,
-                        item.quest.point
+                        listtitleArray[index],
+                        item.quest.point,
+                        item.quest.answer
                     ];
                     worksheetData.push(row);
                 });
             }
 
             const worksheet = XLSX.utils.sheet_add_aoa([], worksheetData);
+
+            // Set column width   ["Index", "영역", "분류번호", "진단항목", "자가진단 결과", "Answer"]
+            const colWidths = [
+                { wch: 8 }, // Index
+                { wch: 8 }, // Category
+                { wch: 8 }, // SCQID
+                { wch: 12 }, // Title
+                { wch: 8 }, // Point
+                { wch: 40 }, // Answer
+            ];
+            worksheet["!cols"] = colWidths;
+
+            // Merge cells
+            const mergeCells = [
+                { s: { r: 4, c: 1 }, e: { r: 7, c: 1 } }, // Merge P
+                { s: { r: 8, c: 1 }, e: { r: 16, c: 1 } }, // Merge E
+                { s: { r: 17, c: 1 }, e: { r: 25, c: 1 } }, // Merge S
+                { s: { r: 26, c: 1 }, e: { r: 30, c: 1 } }, // Merge G
+            ];
+            worksheet["!merges"] = mergeCells;
+
+            // Center text horizontally and vertically within merged cells
+            mergeCells.forEach(mergeCell => {
+                const { s, e } = mergeCell;
+                for (let row = s.r; row <= e.r; row++) {
+                    for (let col = s.c; col <= e.c; col++) {
+                        const cell = worksheet[XLSX.utils.encode_cell({ r: row, c: col })];
+                        if (cell && cell.t) {
+                            if (!cell.s) cell.s = {};
+                            cell.s.alignment = { horizontal: "center", vertical: "center" };
+                        }
+                    }
+                }
+            });
+            
+
+
             return worksheet;
         }
         // Create a workbook
@@ -205,7 +307,7 @@
 
         // Add the worksheet to the workbook
         const worksheet = jsonToWorksheet(answerdata);
-        XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Report");
 
         // Convert the workbook to a binary string
         const excelData = XLSX.write(workbook, { bookType: "xlsx", type: "binary" });

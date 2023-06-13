@@ -105,6 +105,7 @@
     var questtype = 0;
     var dataanswer = [];
     var reportdata = [];
+    var titlelist = [];
 
     var myStorage = window.sessionStorage;
     var userID = myStorage.getItem("ID");
@@ -157,7 +158,10 @@
     function drawpage(data) {
         console.log(data);
         questtype = data.type;
-        var questionText = data.question + '<input type="text" id="scqidinput" value="' + data.ID + '@' + data.type + '@' + data.SCQID + '" style="display:none;">';
+        var questionText = data.question + '<input type="text" id="scqidinput" value="'
+            + data.ID + '@' + data.type + '@' + data.SCQID
+            + '" style="display:none;"><input type="text" id="inputtitle" value="'
+            + data.question + '" style="display:none;">';
         $('#questiontext').html(questionText);
         var part = data.SCQID.split("-");
         console.log('step number');
@@ -251,6 +255,7 @@
         questionumb = questionumb - 1;
         dataanswer.splice(questionumb, 1);
         reportdata.splice(questionumb, 1);
+        titlelist.splice(questionumb, 1);
         getQuestion(questionumb);
     }
 
@@ -267,6 +272,8 @@
 
 
     function addansreport() {
+        var titleinput = document.getElementById("inputtitle").value;
+        titlelist.push(titleinput);
 
         if (questtype == 1) {
             var radios = document.getElementsByName('radiooption');
@@ -505,7 +512,7 @@
             "epoints": JSON.stringify(dataanswer),
             "spoints": JSON.stringify(reportdata),
             "gpoints": JSON.stringify(resultSunPoint),
-            "totalpoints": '',
+            "totalpoints": JSON.stringify(titlelist),
         }
 
         $.ajax({
