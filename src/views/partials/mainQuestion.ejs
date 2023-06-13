@@ -249,7 +249,8 @@
 
     function backpage() {
         questionumb = questionumb - 1;
-        console.log(questionumb);
+        dataanswer.splice(questionumb, 1);
+        reportdata.splice(questionumb, 1);
         getQuestion(questionumb);
     }
 
@@ -308,7 +309,7 @@
             }
             var reportitem = {
                 "PESG": sectionid[0],
-                "point": objpoint
+                "point": parseInt(objpoint)
             }
             reportdata.push(reportitem);
 
@@ -467,19 +468,45 @@
     }
 
 
+    function sumPointsByPESG(data) {
+        const sumPoints = {};
+        const itemCount = {};
+
+        for (const item of data) {
+            const { PESG, point } = item;
+
+            // Calculate sum of points
+            if (sumPoints[PESG]) {
+                sumPoints[PESG] += point;
+            } else {
+                sumPoints[PESG] = point;
+            }
+
+            // Count number of items
+            if (itemCount[PESG]) {
+                itemCount[PESG] += 1;
+            } else {
+                itemCount[PESG] = 1;
+            }
+        }
+
+        return { sumPoints, itemCount };
+    }
+
+
     function senddataanswer() {
         console.log(dataanswer);
         addansreport();
+        var resultSunPoint = sumPointsByPESG(reportdata)
+
 
         var responsedata = {
             "userID": userID,
             "epoints": JSON.stringify(dataanswer),
-            "spoints": JSON.stringify(dataanswer),
-            "gpoints": JSON.stringify(dataanswer),
-            "totalpoints": 70,
+            "spoints": JSON.stringify(reportdata),
+            "gpoints": JSON.stringify(resultSunPoint),
+            "totalpoints": '',
         }
-
-
 
         $.ajax({
             url: '/checkhistorysql',
@@ -490,6 +517,9 @@
             success: function (data) {
                 console.log(data);
                 // Handle the response data
+                var myStorage = window.sessionStorage;
+                myStorage.setItem('report', JSON.stringify(resultSunPoint));
+
                 window.location.href = '/report';
             },
             error: function (error) {
@@ -497,10 +527,6 @@
                 console.error('Error:', error);
             }
         });
-
-
-
-
     }
 
     function questiontype1(options) {
