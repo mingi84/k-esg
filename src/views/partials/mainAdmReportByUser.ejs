@@ -1,0 +1,82 @@
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <div class="container">
+        <div class="row">
+            <table id="dataTable">
+                <thead>
+                    <tr>
+                        <th>Index</th>
+                        <th>ID</th>
+                        <th>PESG</th>
+                        <th>SCQID</th>
+                        <th>Type</th>
+                        <th>Answer</th>
+                        <th>Point</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        
+        </div>
+    </div>
+
+    <script>
+        const jsonData = [{ "ID": "1", "quest": { "PESG": "P", "SCQID": "P-1-1", "type": "1", "answer": "조직의 홈페이지 지속가능경영보고서, 사업보고서, 기타 간행물 등에 ESG 정보를 분산하여 공시하고 있는 경우", "point": 25 } }, { "ID": "2", "quest": { "PESG": "P", "SCQID": "P-1-2", "type": "1", "answer": "1년 단위로 보고서 발간 및 ESG정보를 공시하는 경우", "point": 100 } }, { "ID": "3", "quest": { "PESG": "P", "SCQID": "P-1-3", "type": "1", "answer": "조직의 영향력과 통제력 범위에 있는 곳(자회사, 종속법인, 연결실체 등)의 모든 ESG 정보를 공시하고 있는 경우", "point": 100 } }, { "ID": "4", "quest": { "PESG": "P", "SCQID": "P-3-1", "type": "5", "answer": "[\"검증 의견서에 검증기관 (또는 검증인)이  명시되어 있는 경우<br>(또는, 검증기관이 License Number를 보유하고 있는 경우)\",\"검증의견서에 검증기관과의 독립성 성명이 포함되어 있는 경우<br>(즉, 검증기관과 검증받는 조직간 이해관계 상충이 없음을 선언한 경우)\",\"검증의견서에 검증표준(방법론)이 제시되어 있는 경우<br>(AA1000AS, ISAE3000, 또는 제3자 검증기관이 개발한 자체 검증표준 등)\",\"검증의견서에 ESG정보 검증수준을 공개하고 있는 경우<br>(Type1/Type2, Moderate/High, 제한적/합리적 등)\",\"검증의견서에 제3자 검증기관이 검증한 정보공시 지표가 적시되어 있는 경우<br>(즉, 조직의 모든 ESG 정보 중 어떠한 정보를 검증하였는지 명시하는 경우)\"]", "point": 100 } }, { "ID": "10", "quest": { "PESG": "E", "SCQID": "E-1-2", "type": "5", "answer": "[\"환경경영 과제 실행에 필요한 자원을 투입하고 있는 경우 <br>(환경투자 예산, 역량강화 교육, 내외부 전문인력 등)\",\"환경경영 추진 현황을 점검/분석/평가하는 시스템이 있는 경우 <br>(IT기반 모니터링 시스템, 과제점검 회의, 제3자 의견수렴 등)\",\"환경경영 과제 이행현황이 경영진 포함 관련 구성원의 성과평가지표(KPls)에 반영되어 있는 경우\"]", "point": 50 } }, { "ID": "11", "quest": { "PESG": "E", "SCQID": "E-2-1", "type": "10", "answer": "[\"직전 1개년 원단위 사용량 당해년도 산업 평균 미만\",\"지난 5개년 원단위 원부자재 사용량 감소 추세\"]", "point": 100 } }, { "ID": "12", "quest": { "PESG": "E", "SCQID": "E-3-1", "type": "10", "answer": "[\"국내 및 해외 모든 사업장이 '탄소중립' 또는 '탄소제로'를 달성한 경우\",\"국내 및 해외 모든 사업장이 '탄소중립' 또는 '탄소제로'를 달성한 경우\"]", "point": 100 } }, { "ID": "13", "quest": { "PESG": "E", "SCQID": "E-3-3", "type": "5", "answer": "[\"검증의견서에 검증표준(방법론)이 제시되어 있는 경우<br>(온실가스 배출권거래제의 배출량 보고 및 인증에 관한 지침,GHG Protocol, ISO14046-1등)\",\"검증의견서에 ESG정보 검증수준을 공개하고 있는 경우 <br>(전체/일부 데이터 검증, 제한적/합리적 보증 등)\",\"제3자 검증기관이 검증한 온실가스 배출량 검증 범위가 적시되어 있는 경우 <br>(즉, 조직의 사업장 중 온실가스 배출량을 검증받은 사업장 및 지역 등)\",\"조직의 온실가스 관리에 관한 제3자 검증기관 의견이 명시되어 있는 경우 <br>(온실가스 관리 시스템 개선, 향후 검증값의 변동가능성 등)\"]", "point": 75 } }, { "ID": "14", "quest": { "PESG": "E", "SCQID": "E-4-1", "type": "10", "answer": "[\"직전 1개년 원단위 에너지 사용량이 당해년도 산업 평균 동일\",\"지난 5개년 원단위 에너지 사용량이 변동 없음\"]", "point": 50 } }, { "ID": "15", "quest": { "PESG": "E", "SCQID": "E-5-1", "type": "10", "answer": "[\"직전 1개년 원단위 용수 사용량이 당해년도 산업 평균 미만\",\"지난 5개년 원단위 용수 사용량이 증가 추세\"]", "point": 50 } }, { "ID": "16", "quest": { "PESG": "E", "SCQID": "E-6-1", "type": "10", "answer": "[\"직전 1개년 원단위 폐기물이 당해년도 산업 평균 동일\",\"지난 5개년 원단위 폐기물이 증가 추세\"]", "point": 25 } }, { "ID": "17", "quest": { "PESG": "E", "SCQID": "E-7-1", "type": "10", "answer": "[\"직전 1개년 대기오염물질 평균 배출농도가 당해년도 산업 평균 미만\",\"지난 5개년 대기오염물질 평균 배출농도가 감소 추세\"]", "point": 100 } }, { "ID": "18", "quest": { "PESG": "E", "SCQID": "E-7-2", "type": "10", "answer": "[\"직전 1개년 수질오염물질 평균 배출농도가 당해년도 산업 평균 초과\",\"수질오염물질 평균 배출농도를 관리하지 않는 경우\"]", "point": 0 } }, { "ID": "21", "quest": { "PESG": "S", "SCQID": "S-2-2", "type": "1", "answer": "조직의 정규직 비율이 40% 이하인 경우", "point": 25 } }, { "ID": "22", "quest": { "PESG": "S", "SCQID": "S-2-6", "type": "1", "answer": "노동조합 가입.설립 또는 상시근로자 30인 이상인 경우 노사협의회 설치<br>(위원 선임, 협의회규정 제정 등)", "point": 25 } }, { "ID": "23", "quest": { "PESG": "S", "SCQID": "S-3-1", "type": "1", "answer": "조직의 전체 구성원 중 여성이 차지하는 비율과, 미등기임원 중 <br>여성이 차지하는 비율의 차이가 20% 이하인 경우", "point": 100 } }, { "ID": "24", "quest": { "PESG": "S", "SCQID": "S-3-2", "type": "1", "answer": "조직의 1인 평균 급여액 대비 '여성(또는 남성) 1인 평균 급여액' 비율이 <br>70% 초과 ~80% 이하인 경우", "point": 50 } }, { "ID": "25", "quest": { "PESG": "S", "SCQID": "S-3-3", "type": "1", "answer": "직전 1개년 장애인 고용률이 법적 의무고용률의 120% 이상인 경우", "point": 100 } }, { "ID": "26", "quest": { "PESG": "S", "SCQID": "S-4-1", "type": "5", "answer": "[\"안전보건관리체계 구축을 위해 근로자의 참여 및 협의를 보장하는 경우<br>(안전보건 정보공개, 구성원 참여절차 마련, 의견제시 문화 조성 등)\",\"조직의 위험요인 파악과 이에 대한 제거·대체·통제 조치를 하는 경우 <br>(유해위험요인 파악, 위험성 평가, 위험요인 제거·대체·통제 방안 마련, 교육훈련 실시)\"]", "point": 25 } }, { "ID": "27", "quest": { "PESG": "S", "SCQID": "S-4-2", "type": "10", "answer": "[\"직전 1개년 산업재해율 당해년도 산업 평균 초과\",\"지난 5개년산업재해율 변동 없음\"]", "point": 25 } }, { "ID": "28", "quest": { "PESG": "S", "SCQID": "S-7-1", "type": "5", "answer": "[\"조직의 사회공헌 미션, 비전, 또는 슬로건을 달성하기 위한 사회공헌 추진 분야/영역을 제시하고 있는 경우\",\"조직의 사회공헌 추진 분야/영역별 대표 프로그램을 제시하고 있는 경우\"]", "point": 25 } }, { "ID": "29", "quest": { "PESG": "S", "SCQID": "S-7-2", "type": "1", "answer": "상기 봉사활동 참여 인센티브 제도 중 1개를 도입하고 있는 경우", "point": 50 } }, { "ID": "31", "quest": { "PESG": "G", "SCQID": "G-1-1", "type": "10", "answer": "[\"이사회 또는 산하 위원회에서 ESG관련 안건을 다루고 있지 않은 경우\",\"이사회 또는 산하 위원회 운영규정에 ESG라는단어만 기재하고 있는 경우\"]", "point": 25 } }, { "ID": "32", "quest": { "PESG": "G", "SCQID": "G-2-1", "type": "1", "answer": "이사회 구성원 평균 출석률이 75% 미만인 경우", "point": 0 } }, { "ID": "33", "quest": { "PESG": "G", "SCQID": "G-2-4", "type": "1", "answer": "안건에 대한 수정,보완,반대하는 의견이 한 건도 없는 경우", "point": 0 } }, { "ID": "34", "quest": { "PESG": "G", "SCQID": "G-3-1", "type": "1", "answer": "주주총회 소집 공고를 서면으로만 통지하거나, 주주의 동의를 받아 전자문서로만 하는 경우", "point": 0 } }, { "ID": "35", "quest": { "PESG": "G", "SCQID": "G-4-1", "type": "5", "answer": "[\"윤리규범 위반한 구성원 수를 공시하고 있는 경우\"]", "point": 0 } }]
+
+        function generateTable() {
+            const tableBody = document.querySelector('#dataTable tbody');
+            console.log(jsonData)
+            for (let i = 0; i < jsonData.length; i++) {
+                const row = document.createElement('tr');
+
+                const indexCell = document.createElement('td');
+                indexCell.textContent = i + 1;
+                row.appendChild(indexCell);
+
+                const idCell = document.createElement('td');
+                idCell.textContent = jsonData[i].ID;
+                row.appendChild(idCell);
+
+                const pesgCell = document.createElement('td');
+                pesgCell.textContent = jsonData[i].quest.PESG;
+                row.appendChild(pesgCell);
+
+                const scqidCell = document.createElement('td');
+                scqidCell.textContent = jsonData[i].quest.SCQID;
+                row.appendChild(scqidCell);
+
+                const typeCell = document.createElement('td');
+                typeCell.textContent = jsonData[i].quest.type;
+                row.appendChild(typeCell);
+
+                const answerCell = document.createElement('td');
+                answerCell.innerHTML = '<div>'+ JSON.parse(JSON.stringify(jsonData[i].quest.answer)).replaceAll('","','<br><br>') + '</div>';
+                row.appendChild(answerCell);
+
+                const pointCell = document.createElement('td');
+                pointCell.textContent = jsonData[i].quest.point;
+                row.appendChild(pointCell);
+
+                tableBody.appendChild(row);
+            }
+        }
+
+        // Call the function to generate the table
+        generateTable();
+
+    </script>

@@ -1,0 +1,241 @@
+<!--sheet.js-->
+<script language="javascript" type="text/javascript" src="../js/xlsx.full.min.js"></script>
+<script language="javascript" type="text/javascript" src="../js/FileSaver.min.js"></script>
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th,
+    td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th class="text-center">N</th>
+                    <th class="text-center">이름</th>
+                    <th class="text-center">회사명</th>
+                    <th class="text-center">연락처</th>
+                    <th class="text-center">이메일</th>
+                    <th class="text-center">자가진단 날짜</th>
+                    <th class="text-center">자가진단 결과</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        // Code to be executed after the page has finished loading
+        // Call your function or perform any desired operations here
+        getCheckHistList();
+    });
+
+    function getCheckHistList() {
+        $.ajax({
+            url: '/checkhistoryall',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                // Handle the response data
+                console.log(data);
+                getuserinfobyid(data)
+                //generateTableAdm(data);
+            },
+            error: function (error) {
+                // Handle any errors
+                console.error('Error:', error);
+            }
+        });
+    }
+
+    var concatlist;
+
+    async function getuserinfobyid(data) {
+        try {
+            const promises = data.map((item) => {
+                return new Promise((resolve, reject) => {
+                    $.ajax({
+                        url: '/userinfobyID/' + item.userID,
+                        method: 'GET',
+                        dataType: 'json',
+                        success: function (userinfo) {
+                            var itemlist = {
+                                "user": userinfo,
+                                "data": item
+                            };
+                            resolve(itemlist);
+                        },
+                        error: function (error) {
+                            reject(error);
+                        }
+                    });
+                });
+            });
+
+            const results = await Promise.all(promises);
+            console.log(results);
+            console.log(JSON.stringify(results));
+            concatlist = results;
+            generateTableAdm(results);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+    function generateTableAdm(jsonData) {
+        const tableBody = document.querySelector('#dataTable tbody');
+        console.log(jsonData)
+        for (let i = 0; i < jsonData.length; i++) {
+            const row = document.createElement('tr');
+
+            const indexCell = document.createElement('td');
+            indexCell.textContent = i + 1;
+            indexCell.classList.add('text-center');
+            row.appendChild(indexCell);
+
+            const nameCell = document.createElement('td');
+            nameCell.textContent = jsonData[i].user[0].name;
+            nameCell.classList.add('text-center');
+            row.appendChild(nameCell);
+
+            const companyCell = document.createElement('td');
+            companyCell.textContent = jsonData[i].user[0].company;
+            companyCell.classList.add('text-center');
+            row.appendChild(companyCell);
+
+            const phoneCell = document.createElement('td');
+            phoneCell.textContent = jsonData[i].user[0].phone;
+            phoneCell.classList.add('text-center');
+            row.appendChild(phoneCell);
+
+            const emailCell = document.createElement('td');
+            emailCell.textContent = jsonData[i].user[0].email;
+            emailCell.classList.add('text-center');
+            row.appendChild(emailCell);
+
+            const dateCell = document.createElement('td');
+            dateCell.textContent = jsonData[i].data.checkdate;
+            dateCell.classList.add('text-center');
+            row.appendChild(dateCell);
+
+            const downloadCell = document.createElement('td');
+            downloadCell.innerHTML = '<a onclick=downloadExcel(' + i + ',"filename.xlsx")>Download</a>';
+            downloadCell.classList.add('text-center');
+            row.appendChild(downloadCell);
+
+            tableBody.appendChild(row);
+        }
+    }
+
+
+
+
+
+
+
+
+    function downloadExcel(i, filename) {
+        const answerdata = concatlist[i];
+
+        // Function to convert JSON to worksheet
+        function jsonToWorksheet(answerdata) {
+            const worksheetData = [];
+
+            // Add headers
+            const headers = ["Index", "ID", "PESG", "SCQID", "Type", "Answer", "Point"];
+            worksheetData.push(headers);
+
+            // Parse epoints string into an array
+            let epointsArray = [];
+            try {
+                epointsArray = JSON.parse(answerdata.data.epoints);
+            } catch (error) {
+                console.error("Error parsing epoints string:", error);
+            }
+
+            // Check if epointsArray is an array
+            if (Array.isArray(epointsArray)) {
+                // Add rows
+                epointsArray.forEach((item, index) => {
+                    const row = [
+                        index + 1,
+                        item.ID,
+                        item.quest.PESG,
+                        item.quest.SCQID,
+                        item.quest.type,
+                        item.quest.answer,
+                        item.quest.point
+                    ];
+                    worksheetData.push(row);
+                });
+            }
+
+            const worksheet = XLSX.utils.sheet_add_aoa([], worksheetData);
+            return worksheet;
+        }
+        // Create a workbook
+        const workbook = XLSX.utils.book_new();
+
+        // Add the worksheet to the workbook
+        const worksheet = jsonToWorksheet(answerdata);
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+        // Convert the workbook to a binary string
+        const excelData = XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
+
+        // Convert the binary string to a Blob
+        const blob = new Blob([s2ab(excelData)], { type: "application/octet-stream" });
+
+        // Create a download link
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = filename;
+
+        // Trigger the download
+        link.click();
+
+        // Function to convert a string to an ArrayBuffer
+        function s2ab(s) {
+            const buf = new ArrayBuffer(s.length);
+            const view = new Uint8Array(buf);
+            for (let i = 0; i < s.length; i++) {
+                view[i] = s.charCodeAt(i) & 0xff;
+            }
+            return buf;
+        }
+
+
+    }
+
+
+
+
+</script>
