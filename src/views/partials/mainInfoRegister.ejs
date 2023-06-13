@@ -45,35 +45,28 @@
                     <div class="col-12">
                         <label for="companyname" class="form-label">회사명</label>
                         <input type="text" class="form-control" id="company" placeholder="">
-                        <div class="invalid-feedback">
-                            Please enter a valid company name updates.
-                        </div>
+                        <label id="companyError" class="invalid-feedback" style="display: none;"></label>
                     </div>
 
 
                     <div class="col-sm-6">
                         <label for="userName" class="form-label">이름</label>
                         <input type="text" class="form-control" id="name" placeholder="" value="" required="">
-                        <div class="invalid-feedback">
-                            Valid name is required.
-                        </div>
+                        <label id="nameError" class="invalid-feedback" style="display: none;"></label>
                     </div>
 
                     <div class="col-sm-6">
                         <label for="phoneNumber" class="form-label">연락처</label>
-                        <input type="text" class="form-control" id="phone" placeholder="00-0000-0000" value=""
+                        <input type="text" class="form-control" id="phone" placeholder="000-0000-0000" value=""
                             required="">
-                        <div class="invalid-feedback">
-                            Valid phone number is required.
-                        </div>
+                        <label id="phoneError" class="invalid-feedback" style="display: none;"></label>
                     </div>
 
                     <div class="col-12">
                         <label for="email" class="form-label">Email </label>
-                        <input type="email" class="form-control" id="email" placeholder="you@example.com">
-                        <div class="invalid-feedback">
-                            Please enter a valid email address for shipping updates.
-                        </div>
+                        <input type="email" class="form-control" id="email" placeholder="you@example.com"
+                            onchange="valemail()">
+                        <label id="emailError" class="invalid-feedback" style="display: none;"></label>
                     </div>
 
 
@@ -87,6 +80,7 @@
                             개인정보 수집 및 이용 동의
                         </a>
                     </label>
+                    <label id="agreeError" class="invalid-feedback" style="display: none;"></label>
                 </div>
 
                 <br>
@@ -190,45 +184,114 @@
 
 <script>
     function saveuserdata() {
-        var inputCompany = $('#company').val();
-        var inputName = $('#name').val();
-        var inputPhone = $('#phone').val();
-        var inputEmail = $('#email').val();
 
-        var userdate = {
-            "name": inputName,
-            "company": inputCompany,
-            "phone": inputPhone,
-            "email": inputEmail
+
+        // Clear existing error messages
+        $('.invalid-feedback').hide();
+
+
+
+        // Get form values
+        var company = $('#company').val().trim();
+        var name = $('#name').val().trim();
+        var email = $('#email').val().trim();
+        var phone = $('#phone').val().trim();
+        var agreeChecked = $('#termscheck').prop('checked');
+
+
+        // Validate form fields
+        var valid = true;
+
+        if (company === '') {
+            $('#companyError').text('회사 이름을 입력해주세요.').show();
+            valid = false;
         }
 
-        $.ajax({
-            url: '/userinfosql',
-            method: 'post',
-            dataType: 'json',
-            data: JSON.stringify(userdate), // JSON body
-            contentType: 'application/json', // Set content type to JSON
-            success: function (data) {
-                // Handle the response data
-                console.log(data);
-                if (data[0] == null || data[0] == []) {
-                    saveuserdata();
-                } else {
-                    //console.log(data[0].ID);
-                    var myStorage = window.sessionStorage;
-                    myStorage.setItem('ID', data[0].ID);
-                    window.location.href = '/questions';
-                }
-            },
-            error: function (error) {
-                // Handle any errors
-                console.error('Error:', error);
+        if (name === '') {
+            $('#nameError').text('이름을 입력해주세요.').show();
+            valid = false;
+        }
+
+        if (email === '') {
+            $('#emailError').text('이메일을 입력해주세요.').show();
+            valid = false;
+        } else if (valemail(email) == false) {
+            $('#emailError').text('유효한 이메일을 입력해주세요.').show();
+            valid = false;
+        }
+
+        if (phone === '') {
+            $('#phoneError').text('전화번호를 입력해주세요.').show();
+            valid = false;
+        } else if (valphone(phone) == false) {
+            $('#phoneError').text('유효한 전화번호를 입력해주세요.').show();
+            valid = false;
+        }
+
+        if (!agreeChecked) {
+            $('#agreeError').text('약관에 동의해주세요.').show();
+            valid = false;
+        }
+
+        if (valid) {
+            // Form is valid, make API call or perform other actions
+            // ...
+            console.log('valid = true');
+            var userdate = {
+                "name": name,
+                "company": company,
+                "phone": phone,
+                "email": email
             }
-        });
 
-
-
+            
+            $.ajax({
+                url: '/userinfosql',
+                method: 'post',
+                dataType: 'json',
+                data: JSON.stringify(userdate), // JSON body
+                contentType: 'application/json', // Set content type to JSON
+                success: function (data) {
+                    // Handle the response data
+                    console.log(data);
+                    if (data[0] == null || data[0] == []) {
+                        saveuserdata();
+                    } else {
+                        //console.log(data[0].ID);
+                        var myStorage = window.sessionStorage;
+                        myStorage.setItem('ID', data[0].ID);
+                        window.location.href = '/questions';
+                    }
+                },
+                error: function (error) {
+                    // Handle any errors
+                    console.error('Error:', error);
+                }
+            });
+            
+        } else {
+            console.log('valid = false');
+        }
     }
+
+
+    function valemail(email) {
+        let regex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
+        return regex.test(email);
+    }
+
+    function valphone(args) {
+        if (/^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/.test(args)) {
+            return true;
+        }
+        return false;
+    }
+
+
+
+
+
+
 
 
 
