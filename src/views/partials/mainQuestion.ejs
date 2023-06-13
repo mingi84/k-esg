@@ -249,7 +249,8 @@
 
     function backpage() {
         questionumb = questionumb - 1;
-        console.log(questionumb);
+        dataanswer.splice(questionumb, 1);
+        reportdata.splice(questionumb, 1);
         getQuestion(questionumb);
     }
 
@@ -507,8 +508,6 @@
             "totalpoints": '',
         }
 
-
-
         $.ajax({
             url: '/checkhistorysql',
             method: 'post',
@@ -528,10 +527,6 @@
                 console.error('Error:', error);
             }
         });
-
-
-
-
     }
 
     function questiontype1(options) {
