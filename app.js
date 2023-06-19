@@ -8,6 +8,7 @@ const registerRoutes = require('./src/routes/registerRoutes');
 const questionsRoutes = require('./src/routes/questionsRoutes');
 const reportRoutes = require('./src/routes/reportRoutes');
 const admreportRoutes = require('./src/routes/admreportRoutes.js');
+const admRoutes = require('./src/routes/admRoutes.js')
 
 const app = express();
 const port = 80;
@@ -32,6 +33,8 @@ app.use('/register', registerRoutes);
 app.use('/questions', questionsRoutes);
 app.use('/report', reportRoutes);
 app.use('/admreport', admreportRoutes);
+app.use('/admlinkesg21', admRoutes);
+
 
 // Static Files
 app.use(express.static(path.join(__dirname, 'src', 'public')));

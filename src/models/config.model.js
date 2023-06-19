@@ -6,6 +6,7 @@ const Config = function(config){
 };
 
 Config.checkAdminAuth = (key,result)=>{
+    console.log(key);
     sql.query('SELECT valuestr FROM config WHERE keystr=?',key,(err,res)=>{
         if(err){
             console.log("error:",err);

@@ -20,7 +20,7 @@
     }
 </style>
 <div class="container">
-    <div class="row">
+    <div class="row table-responsive-sm">
         <table id="dataTable">
             <thead>
                 <tr>
@@ -45,10 +45,17 @@
 
 <script>
 
+
+
     $(document).ready(function () {
-        // Code to be executed after the page has finished loading
-        // Call your function or perform any desired operations here
-        getCheckHistList();
+        var myStorage = window.sessionStorage;
+        var admis = myStorage.getItem("admis");
+
+        if(admis =='linkyes') {
+            getCheckHistList();
+        } else {
+            window.location.href = '/admlinkesg21'
+        }
     });
 
     function getCheckHistList() {
@@ -297,7 +304,7 @@
                     }
                 }
             });
-            
+
 
 
             return worksheet;

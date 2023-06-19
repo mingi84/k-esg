@@ -7,7 +7,9 @@ exports.checkAdminAuth=(req,res)=>{
             message:
             err.message || "Some error"
         });
-       
+        if(data == false) {
+            return  res.send("{\"result\":\"0\"}");
+        } else 
         if (data[0].valuestr == req.params.valuestr)
             return  res.send("{\"result\":\"1\"}");
         else

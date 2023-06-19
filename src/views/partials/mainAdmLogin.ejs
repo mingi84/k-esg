@@ -1,0 +1,75 @@
+<style>
+    .form-signin {
+        width: 100%;
+        max-width: 330px;
+        padding: 15px;
+        margin: 0 auto;
+    }
+
+    #errormsg {
+        color: red;
+    }
+
+</style>
+<div class="d-fluid" style="position: relative;">
+    <div class="row my-auto adm-bg-slide">
+    </div>
+    <div class="centered text-center">
+        <form class="form-signin">
+            <h1 class="h3 mb-3 font-weight-normal">Adm Login</h1>
+            <div id="errormsg" style="display: none;">Incorrect adm id or password.</div>
+            <label for="inputEmail" class="sr-only">Adm ID</label>
+            <input type="text" id="inputusername" class="form-control" placeholder="Insert Adm ID" required=""
+                autofocus="">
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+            <a class="btn btn-lg btn-primary btn-block" type="submit" onclick="submitForm()">Sign in</a>
+        </form>
+    </div>
+</div>
+
+<script>
+
+    //http://127.0.0.1/config/linkesg21&admin
+
+    function submitForm() {
+
+        $('#errormsg').hide();
+
+        // Get the input values
+        var email = $('#inputusername').val().trim();
+
+        var password = $('#inputPassword').val().trim();
+
+        // Create the API request payload
+        const params = email + "&" + password;
+
+        // Make the API request
+        fetch('http://127.0.0.1/config/' + params, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the API response
+                console.log(data);
+                if (data.result == 1) {
+                    var myStorage = window.sessionStorage;
+                    myStorage.setItem('admis', 'linkyes');
+                    window.location.href = '/admreport'
+                } else {
+                    $('#errormsg').show();
+                }
+            })
+            .catch(error => {
+                // Handle any errors
+                console.error('Error:', error);
+            });
+    }
+
+
+
+
+</script>

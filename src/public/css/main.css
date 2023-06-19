@@ -190,6 +190,14 @@ h4 {
     background-position: center;
 }
 
+.adm-bg-slide {
+    background-image: url('../img/slidehome.png');
+    height: calc(100vh - 187px);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
 /* Centered text */
 .centered {
     position: absolute;
