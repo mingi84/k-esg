@@ -63,7 +63,7 @@
             const params = email + "&" + password;
 
             // Make the API request
-            fetch('http://127.0.0.1/config/' + params, {
+            fetch('/config/' + params, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
