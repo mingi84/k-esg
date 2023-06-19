@@ -9,7 +9,6 @@
     #errormsg {
         color: red;
     }
-
 </style>
 <div class="d-fluid" style="position: relative;">
     <div class="row my-auto adm-bg-slide">
@@ -21,8 +20,12 @@
             <label for="inputEmail" class="sr-only">Adm ID</label>
             <input type="text" id="inputusername" class="form-control" placeholder="Insert Adm ID" required=""
                 autofocus="">
+            <label id="nameError" class="invalid-feedback" style="display: none;"></label>
+            <br>
             <label for="inputPassword" class="sr-only">Password</label>
             <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+            <label id="pwError" class="invalid-feedback" style="display: none;"></label>
+            <br>
             <a class="btn btn-lg btn-primary btn-block" type="submit" onclick="submitForm()">Sign in</a>
         </form>
     </div>
@@ -38,35 +41,51 @@
 
         // Get the input values
         var email = $('#inputusername').val().trim();
-
         var password = $('#inputPassword').val().trim();
 
-        // Create the API request payload
-        const params = email + "&" + password;
+        // Validate form fields
+        var valid = true;
 
-        // Make the API request
-        fetch('http://127.0.0.1/config/' + params, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        })
-            .then(response => response.json())
-            .then(data => {
-                // Handle the API response
-                console.log(data);
-                if (data.result == 1) {
-                    var myStorage = window.sessionStorage;
-                    myStorage.setItem('admis', 'linkyes');
-                    window.location.href = '/admreport'
-                } else {
-                    $('#errormsg').show();
-                }
+
+        if (email === '') {
+            $('#nameError').text('adm 아이디 입력해주세요.').show();
+            valid = false;
+        }
+
+        if (password === '') {
+            $('#pwError').text('비밀번호 입력해주세요.').show();
+            valid = false;
+        }
+
+
+        if (valid) {
+            // Create the API request payload
+            const params = email + "&" + password;
+
+            // Make the API request
+            fetch('http://127.0.0.1/config/' + params, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
             })
-            .catch(error => {
-                // Handle any errors
-                console.error('Error:', error);
-            });
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the API response
+                    console.log(data);
+                    if (data.result == 1) {
+                        var myStorage = window.sessionStorage;
+                        myStorage.setItem('admis', 'linkyes');
+                        window.location.href = '/admreport'
+                    } else {
+                        $('#errormsg').show();
+                    }
+                })
+                .catch(error => {
+                    // Handle any errors
+                    console.error('Error:', error);
+                });
+        }
     }
 
 
