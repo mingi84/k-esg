@@ -191,7 +191,7 @@
 
 
 
-            var stringfilename = jsonData[i].user[0].company + "_" + jsonData[i].user[0].name + "_" + checkdate;
+            var stringfilename = jsonData[i].user[0].company.replace(/ /g, "_") + "_" + jsonData[i].user[0].name.replace(/ /g, "_") + "_" + checkdate;
             console.log(stringfilename);
 
             const downloadCell = document.createElement('td');
