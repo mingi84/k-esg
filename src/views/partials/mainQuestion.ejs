@@ -35,7 +35,9 @@
                 <h1 id="questiontext" class="display-5 fw-bold lh-1 mb-3"></h1>
             </div>
             <br>
-            <form class="needs-validation" novalidate="">
+            <label id="checkError" class="invalid-feedback text-center py-2 mb-2"
+                style="display: none; background-color: #FFDADB; border-radius: 4px;"></label>
+            <form class="needs-validation mt-2" novalidate="">
                 <div class="row g-3">
                     <div id="divoptions" class="my-3">
                         <div class="form-check">
@@ -106,14 +108,18 @@
     var dataanswer = [];
     var reportdata = [];
     var titlelist = [];
+    var questtype10lenght = 0;
 
     var myStorage = window.sessionStorage;
     var userID = myStorage.getItem("ID");
 
     $(document).ready(function () {
-        // Code to be executed after the page has finished loading
-        // Call your function or perform any desired operations here
-        getQuestionList();
+        console.log(userID);
+        if (userID == null) {
+            window.location.href = '/inforegister';
+        } else {
+            getQuestionList();
+        }
     });
 
 
@@ -148,6 +154,7 @@
     }
 
     function getQuestion(questionumb) {
+        questtype10lenght = 0;
         var questdata = questionlist[questionumb];
         drawpage(questdata);
     }
@@ -260,16 +267,68 @@
     }
 
     function nextpage() {
-        questionumb = questionumb + 1;
-        console.log(questionumb);
-        console.log(questtype);
+        $('.invalid-feedback').hide();
 
-        addansreport();
+        if (checkvalue()) {
+            questionumb = questionumb + 1;
+            addansreport();
+            getQuestion(questionumb);
+        } else {
+            // message check value
+            $('#checkError').html('<i class="fa fa-exclamation-circle" aria-hidden="true"></i> 목록에서 항목을 선택하십시오.').show();
+        }
 
-        getQuestion(questionumb);
     }
 
 
+    function checkvalue() {
+        var checkvalue = false;
+        if (questtype == 1) {
+            var radios = document.getElementsByName('radiooption');
+
+            for (var i = 0; i < radios.length; i++) {
+                if (radios[i].checked) {
+                    checkvalue = true
+                }
+            }
+            return checkvalue
+        }
+        else if (questtype == 5) {
+            // Iterate over the checkboxes using forEach
+            $('input[type="checkbox"]').each(function (index, checkbox) {
+                // Check if the checkbox is checked
+                if ($(checkbox).is(':checked')) {
+                    checkvalue = true
+                }
+            });
+            return checkvalue;
+
+        }
+        else if (questtype == 10) {
+            var checkvalue = true; // Initialize checkvalue as true
+
+            for (var j = 0; j < questtype10lenght; j++) {
+                var optionindex = 'options' + j;
+                var radios = document.getElementsByName(optionindex);
+                var isChecked = false;
+
+                for (var i = 0; i < radios.length; i++) {
+                    if (radios[i].checked) {
+                        isChecked = true;
+                        break; // Exit the loop if any checkbox is checked
+                    }
+                }
+
+                if (!isChecked) {
+                    checkvalue = false; // Set checkvalue as false if any checkbox is not checked
+                    break; // Exit the outer loop
+                }
+            }
+
+            console.log(checkvalue); // Output the final value of checkvalue
+            return checkvalue;
+        }
+    }
 
     function addansreport() {
         var titleinput = document.getElementById("inputtitle").value;
@@ -500,12 +559,10 @@
         return { sumPoints, itemCount };
     }
 
-
-    function senddataanswer() {
+    async function senddataanswer() {
         console.log(dataanswer);
-        addansreport();
-        var resultSunPoint = sumPointsByPESG(reportdata)
-
+        await addansreport();
+        var resultSunPoint = sumPointsByPESG(reportdata);
 
         var responsedata = {
             "userID": userID,
@@ -513,27 +570,26 @@
             "spoints": JSON.stringify(reportdata),
             "gpoints": JSON.stringify(resultSunPoint),
             "totalpoints": JSON.stringify(titlelist),
+        };
+
+        try {
+            const response = await $.ajax({
+                url: '/checkhistorysql',
+                method: 'post',
+                dataType: 'json',
+                data: JSON.stringify(responsedata), // JSON body
+                contentType: 'application/json', // Set content type to JSON
+            });
+
+            console.log(response);
+            var myStorage = window.sessionStorage;
+            myStorage.setItem('report', JSON.stringify(resultSunPoint));
+
+            window.location.href = '/report';
+        } catch (error) {
+            // Handle any errors
+            console.error('Error:', error);
         }
-
-        $.ajax({
-            url: '/checkhistorysql',
-            method: 'post',
-            dataType: 'json',
-            data: JSON.stringify(responsedata), // JSON body
-            contentType: 'application/json', // Set content type to JSON
-            success: function (data) {
-                console.log(data);
-                // Handle the response data
-                var myStorage = window.sessionStorage;
-                myStorage.setItem('report', JSON.stringify(resultSunPoint));
-
-                window.location.href = '/report';
-            },
-            error: function (error) {
-                // Handle any errors
-                console.error('Error:', error);
-            }
-        });
     }
 
     function questiontype1(options) {
@@ -621,6 +677,7 @@
             };
         });
 
+        questtype10lenght = transformedSections.length;
         for (i = 0; i < transformedSections.length; i++) {
             let opttext = transformedSections[i].options;
 
